@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private bool _bButton;
     private bool _xButton;
     private bool _yButton;
-    private bool _isGrounded;
+    public bool _isGrounded;
     private float _slideTime;
     private bool _isRunning;
     private bool _isSliding;
@@ -50,8 +50,9 @@ public class PlayerController : MonoBehaviour
         _slideTime = 100f;
         _animator = gameObject.GetComponent<Animator>();
     }
+    
 
-        // Update is called once per frame
+    // Update is called once per frame
     private void Update()
     {
         _leftJoystickHorizontal = Input.GetAxis("LeftJoystickHorizontal");
@@ -70,9 +71,6 @@ public class PlayerController : MonoBehaviour
         
         //Copying rigidbody velocity to a variable
         Vector2 velocity = _rb.velocity;
-        
-        //TODO Add different movement in air ?
-        //TODO Make sure only one input can be active i.e slide and attack in the same frame shouldn't work
 
         if (_bButton)
         {
@@ -94,26 +92,27 @@ public class PlayerController : MonoBehaviour
 
         //Setting rigidbody velocity equal to changed velocity
         _rb.velocity = velocity;
+        Debug.Log(_rb.velocity);
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
+    
+    private void OnCollisionStay2D(Collision2D other)
     {
         List<ContactPoint2D> collisionList = other.contacts.ToList();
         
         //Loop through list of all contacts and see if any of them
         //Have a normal vector within X range (i.e flat to almost flat ground)
         //If so we know player is grounded
+        
         foreach (var contact in collisionList)
         {
             Vector2 vec = contact.normal;
-            if (vec.y == 1.0f && vec.x < 0.3f && vec.x > -0.3f)
+;            if (vec.y >= 0.8f)
             {
                 _isGrounded = true;
             }
         }
     }
-    
     private void OnCollisionExit2D(Collision2D other)
     {
         List<ContactPoint2D> collisionList = other.contacts.ToList();
@@ -122,7 +121,7 @@ public class PlayerController : MonoBehaviour
         //Have a normal vector within X range (i.e flat to almost flat ground)
         //If so we know player is still grounded, if for loop reaches end player
         //Is not in contact with the ground
-
+        
         if (collisionList.Count == 0)
         {
             return;
@@ -131,7 +130,8 @@ public class PlayerController : MonoBehaviour
         foreach (var contact in collisionList)
         {
             Vector2 vec = contact.normal;
-            if (vec.y == 1.0f && vec.x < 0.3f && vec.x > -0.3f)
+            Debug.Log(vec);
+            if (vec.y >= 0.8f)
             {
                 _isGrounded = true;
                 return;
@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour
         }
         _isGrounded = false;
     }
-
     /// <summary>
     /// Handles Horizontal movement, Walking / Idle
     /// </summary>
@@ -197,7 +196,7 @@ public class PlayerController : MonoBehaviour
         if (_aButton && _isGrounded)
         {
             //Start jumping
-            velocity.y += jumpSpeed * Time.fixedDeltaTime;
+            velocity.y = jumpSpeed * Time.fixedDeltaTime;
             _isGrounded = false;
             //Player is jumping
             _animator.SetBool(IsJumping, true);
@@ -248,9 +247,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    //TODO Should we limit player movement during attack animation?
-    //TODO Should player be able to stop mid slide?
-    //TODO Should we increase speed during slide?
+    //TODO Should we limit player movement during attack animation?  maybe
+    //TODO Should player be able to stop mid slide? nope
+    //TODO Should we increase speed during slide? possibly
     //TODO Handle case where player slides under something and tries to stand up if map structure allows for that
     
     
