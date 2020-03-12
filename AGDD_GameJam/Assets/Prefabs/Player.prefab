@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3111426137589557755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,11 +97,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
-  m_Mass: 0.1
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b8656a873ba92644bbf96008a0de76b3, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
@@ -119,7 +119,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.017824002, y: -0.0597046}
+  m_Offset: {x: 0.017824002, y: -0.052372783}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.106398866, y: 0.26464188}
+  m_Size: {x: 0.106398866, y: 0.24997824}
   m_EdgeRadius: 0
 --- !u!114 &3111426137589557758
 MonoBehaviour:
@@ -145,11 +145,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3111426137589557756}
-  runSpeed: 100
+  runSpeed: 200
   crouchSpeed: 0
-  jumpSpeed: 300
+  jumpSpeed: 400
   jumpTime: 0.4
   slideTime: 0.4
+  _isGrounded: 0
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3

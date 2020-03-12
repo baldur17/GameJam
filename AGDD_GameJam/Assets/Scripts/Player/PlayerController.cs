@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
 
         //Setting rigidbody velocity equal to changed velocity
         _rb.velocity = velocity;
-        Debug.Log(_rb.velocity);
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
     
@@ -130,7 +129,6 @@ public class PlayerController : MonoBehaviour
         foreach (var contact in collisionList)
         {
             Vector2 vec = contact.normal;
-            Debug.Log(vec);
             if (vec.y >= 0.8f)
             {
                 _isGrounded = true;
