@@ -1,0 +1,1291 @@
+fileFormatVersion: 2
+guid: c1f0da80f60e3c14cbe653639eca9004
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -411378906735354078
+    second: wizard idle_0
+  - first:
+      213: 717200642054035583
+    second: wizard idle_1
+  - first:
+      213: 5587558168079916414
+    second: wizard idle_2
+  - first:
+      213: -3017976019093261647
+    second: wizard idle_3
+  - first:
+      213: -4685753079546987741
+    second: wizard idle_4
+  - first:
+      213: -871163624212703264
+    second: wizard idle_5
+  - first:
+      213: -1263592034645169598
+    second: wizard idle_6
+  - first:
+      213: 7633645795209085125
+    second: wizard idle_7
+  - first:
+      213: 589515544322245959
+    second: wizard idle_8
+  - first:
+      213: -7588273252042548576
+    second: wizard idle_9
+  - first:
+      213: -2829097028798438315
+    second: wizard idle_10
+  - first:
+      213: -5750580355278595868
+    second: wizard idle_11
+  - first:
+      213: 4170662835300820087
+    second: wizard idle_12
+  - first:
+      213: 6693806144588621477
+    second: wizard idle_13
+  - first:
+      213: 7192573879630344311
+    second: wizard idle_14
+  - first:
+      213: 3708647835535082221
+    second: wizard idle_15
+  - first:
+      213: -3384287006807425655
+    second: wizard idle_16
+  - first:
+      213: -1744180572245340813
+    second: wizard idle_17
+  - first:
+      213: 4855536805105457310
+    second: wizard idle_18
+  - first:
+      213: -2385496173958062468
+    second: wizard idle_19
+  - first:
+      213: 7043305618241844651
+    second: wizard idle_20
+  - first:
+      213: -6062071261736483961
+    second: wizard idle_21
+  - first:
+      213: -3824795723735434578
+    second: wizard idle_22
+  - first:
+      213: 7173754698202485305
+    second: wizard idle_23
+  - first:
+      213: -3073538178239181577
+    second: wizard idle_24
+  - first:
+      213: -1182502460235838823
+    second: wizard idle_25
+  - first:
+      213: 5039268552964302643
+    second: wizard idle_26
+  - first:
+      213: 2722360276325504767
+    second: wizard idle_27
+  - first:
+      213: 3818693170631820538
+    second: wizard idle_28
+  - first:
+      213: 6701765003789073031
+    second: wizard idle_29
+  - first:
+      213: 5283490684892506297
+    second: wizard idle_30
+  - first:
+      213: -3138356005781122918
+    second: wizard idle_31
+  - first:
+      213: -5128033388110627515
+    second: wizard idle_32
+  - first:
+      213: 3180789348754966783
+    second: wizard idle_33
+  - first:
+      213: 1931280502325955423
+    second: wizard idle_34
+  - first:
+      213: 5674674940146439880
+    second: wizard idle_35
+  - first:
+      213: 9118962405838829793
+    second: wizard idle_36
+  - first:
+      213: 8148613520602332329
+    second: wizard idle_37
+  - first:
+      213: -6800319837617844817
+    second: wizard idle_38
+  - first:
+      213: -2870850933391949159
+    second: wizard idle_39
+  - first:
+      213: 6161105929303052832
+    second: wizard idle_40
+  - first:
+      213: 60883266707443823
+    second: wizard idle_41
+  - first:
+      213: -7333247164042549260
+    second: wizard idle_42
+  - first:
+      213: 758111658712328764
+    second: wizard idle_43
+  - first:
+      213: -7348242193318359824
+    second: wizard idle_44
+  - first:
+      213: -2702924530921871895
+    second: wizard idle_45
+  - first:
+      213: 6568094290953065202
+    second: wizard idle_46
+  - first:
+      213: 2470617461905997036
+    second: wizard idle_47
+  - first:
+      213: 5438195797087628948
+    second: wizard idle_48
+  - first:
+      213: 1699365221905781786
+    second: wizard idle_49
+  - first:
+      213: -4567806686981046717
+    second: wizard idle_50
+  - first:
+      213: 7582013765773474972
+    second: wizard idle_51
+  - first:
+      213: 7621069176746831382
+    second: wizard idle_52
+  - first:
+      213: -442403283692847120
+    second: wizard idle_53
+  - first:
+      213: 6416889226872849996
+    second: wizard idle_54
+  - first:
+      213: -266120635150984864
+    second: wizard idle_55
+  - first:
+      213: -8113051976596838053
+    second: wizard idle_56
+  - first:
+      213: 3341438897971097718
+    second: wizard idle_57
+  - first:
+      213: -7962438897518164783
+    second: wizard idle_58
+  - first:
+      213: -3518424370788520031
+    second: wizard idle_59
+  - first:
+      213: 6771319876665321660
+    second: wizard idle_60
+  - first:
+      213: -6217683429994991125
+    second: wizard idle_61
+  - first:
+      213: -5761517488213704663
+    second: wizard idle_62
+  - first:
+      213: 751629473266047013
+    second: wizard idle_63
+  - first:
+      213: -4284064120705013752
+    second: wizard idle_64
+  - first:
+      213: -2232048653202452371
+    second: wizard idle_65
+  - first:
+      213: -1608148313767335292
+    second: wizard idle_66
+  - first:
+      213: -9204214442504209192
+    second: wizard idle_67
+  - first:
+      213: -8669352458380663516
+    second: wizard idle_68
+  - first:
+      213: 3692867846361680483
+    second: wizard idle_69
+  - first:
+      213: -3975841625652287243
+    second: wizard idle_70
+  - first:
+      213: 2052195616829584202
+    second: wizard idle_71
+  - first:
+      213: -7801126712403074777
+    second: wizard idle_72
+  - first:
+      213: -8768398143952138796
+    second: wizard idle_73
+  - first:
+      213: -3812843754168371256
+    second: wizard idle_74
+  - first:
+      213: -2618508584135644764
+    second: wizard idle_75
+  - first:
+      213: 7267456855370381606
+    second: wizard idle_76
+  - first:
+      213: -2097423782977398528
+    second: wizard idle_77
+  - first:
+      213: 8220417791831268799
+    second: wizard idle_78
+  - first:
+      213: -8145356301410249085
+    second: wizard idle_79
+  - first:
+      213: -1105738872944170432
+    second: wizard idle_80
+  - first:
+      213: -1384123679525880621
+    second: wizard idle_81
+  - first:
+      213: -4918340343235863215
+    second: wizard idle_82
+  - first:
+      213: 4821427998652545683
+    second: wizard idle_83
+  - first:
+      213: -8509464938973495829
+    second: wizard idle_84
+  - first:
+      213: 7432861902283247084
+    second: wizard idle_85
+  - first:
+      213: 5311144964392944556
+    second: wizard idle_86
+  - first:
+      213: -2779112467102509500
+    second: wizard idle_87
+  - first:
+      213: 3584276351537126563
+    second: wizard idle_88
+  - first:
+      213: -404219676168355857
+    second: wizard idle_89
+  - first:
+      213: -7142264586903099454
+    second: wizard idle_90
+  - first:
+      213: -5791710821287021145
+    second: wizard idle_91
+  - first:
+      213: 5732629543896676958
+    second: wizard idle_92
+  - first:
+      213: -8146387575101853871
+    second: wizard idle_93
+  - first:
+      213: 2446059903897402791
+    second: wizard idle_94
+  - first:
+      213: -7135074195260272765
+    second: wizard idle_95
+  - first:
+      213: 1677771894648462448
+    second: wizard idle_96
+  - first:
+      213: -2713722792677472876
+    second: wizard idle_97
+  - first:
+      213: -2005753442968359459
+    second: wizard idle_98
+  - first:
+      213: -6901991494980588480
+    second: wizard idle_99
+  - first:
+      213: -4491169156471393341
+    second: wizard idle_100
+  - first:
+      213: 8500423444594082161
+    second: wizard idle_101
+  - first:
+      213: 8749356614451659339
+    second: wizard idle_102
+  - first:
+      213: 7311196911600402127
+    second: wizard idle_103
+  - first:
+      213: 3817380868501544412
+    second: wizard idle_104
+  - first:
+      213: 4029683693924892747
+    second: wizard idle_105
+  - first:
+      213: -2608308075504424195
+    second: wizard idle_106
+  - first:
+      213: 4128201305457449097
+    second: wizard idle_107
+  - first:
+      213: 7790937763576236230
+    second: wizard idle_108
+  - first:
+      213: 1774105945662587733
+    second: wizard idle_109
+  - first:
+      213: -8493394511622798982
+    second: wizard idle_110
+  - first:
+      213: 7679229633446219259
+    second: wizard idle_111
+  - first:
+      213: -3670297004000639898
+    second: wizard idle_112
+  - first:
+      213: 3370448376248575169
+    second: wizard idle_113
+  - first:
+      213: -1769436908065734672
+    second: wizard idle_114
+  - first:
+      213: -6437326008490003484
+    second: wizard idle_115
+  - first:
+      213: -7727062544629622387
+    second: wizard idle_116
+  - first:
+      213: -1674406950630509854
+    second: wizard idle_117
+  - first:
+      213: -3926142079445909864
+    second: wizard idle_118
+  - first:
+      213: -2076543588906432944
+    second: wizard idle_119
+  - first:
+      213: 7132874938667152616
+    second: wizard idle_120
+  - first:
+      213: -8642971600547164511
+    second: wizard idle_121
+  - first:
+      213: -937516340211231125
+    second: wizard idle_122
+  - first:
+      213: -2498900013165217057
+    second: wizard idle_123
+  - first:
+      213: -3293457838962308146
+    second: wizard idle_124
+  - first:
+      213: 6375925965675039811
+    second: wizard idle_125
+  - first:
+      213: -3503053180110606372
+    second: wizard idle_126
+  - first:
+      213: 2584725451758941240
+    second: wizard idle_127
+  - first:
+      213: -1847315470704674912
+    second: wizard idle_128
+  - first:
+      213: -3865230895173140406
+    second: wizard idle_129
+  - first:
+      213: 5690467122451896716
+    second: wizard idle_130
+  - first:
+      213: 8178773909491579881
+    second: wizard idle_131
+  - first:
+      213: 5521205575011282440
+    second: wizard idle_132
+  - first:
+      213: 850782637422341044
+    second: wizard idle_133
+  - first:
+      213: 6488459037500987722
+    second: wizard idle_134
+  - first:
+      213: -5855866851005197024
+    second: wizard idle_135
+  - first:
+      213: -8921419157471829964
+    second: wizard idle_136
+  - first:
+      213: 8083337496849498663
+    second: wizard idle_137
+  - first:
+      213: 2489841868546622348
+    second: wizard idle_138
+  - first:
+      213: -1943622025283494417
+    second: wizard idle_139
+  - first:
+      213: -1495788973792350587
+    second: wizard idle_140
+  - first:
+      213: 4088633210821785293
+    second: wizard idle_141
+  - first:
+      213: 8718149304734261156
+    second: wizard idle_142
+  - first:
+      213: -2031733088985079709
+    second: wizard idle_143
+  - first:
+      213: 4865062633827979232
+    second: wizard idle_144
+  - first:
+      213: 7888289443218619490
+    second: wizard idle_145
+  - first:
+      213: 1808564010085418071
+    second: wizard idle_146
+  - first:
+      213: -9014554782386807868
+    second: wizard idle_147
+  - first:
+      213: -2958706101059700947
+    second: wizard idle_148
+  - first:
+      213: 1585023635559020867
+    second: wizard idle_149
+  - first:
+      213: 8103747381605674582
+    second: wizard idle_150
+  - first:
+      213: -5043060668353425815
+    second: wizard idle_151
+  - first:
+      213: -2388883239119696408
+    second: wizard idle_152
+  - first:
+      213: 41995126514823097
+    second: wizard idle_153
+  - first:
+      213: -2251459060255105930
+    second: wizard idle_154
+  - first:
+      213: -5968155135784209706
+    second: wizard idle_155
+  - first:
+      213: 2574536960690465738
+    second: wizard idle_156
+  - first:
+      213: -2360090132609246888
+    second: wizard idle_157
+  - first:
+      213: 497478554530903931
+    second: wizard idle_158
+  - first:
+      213: -6717433216172908542
+    second: wizard idle_159
+  - first:
+      213: 2006224729509362192
+    second: wizard idle_160
+  - first:
+      213: -1739463749228140186
+    second: wizard idle_161
+  - first:
+      213: 3392154805545707816
+    second: wizard idle_162
+  - first:
+      213: -3431341500097138916
+    second: wizard idle_163
+  - first:
+      213: -1122301995031997836
+    second: wizard idle_164
+  - first:
+      213: 6285022385580558961
+    second: wizard idle_165
+  - first:
+      213: 2470720219914465018
+    second: wizard idle_166
+  - first:
+      213: 8332610025181768828
+    second: wizard idle_167
+  - first:
+      213: 8624424674533052169
+    second: wizard idle_168
+  - first:
+      213: 5108837504176315123
+    second: wizard idle_169
+  - first:
+      213: -3414103917247021435
+    second: wizard idle_170
+  - first:
+      213: -700583071065808553
+    second: wizard idle_171
+  - first:
+      213: 1703446721459531477
+    second: wizard idle_172
+  - first:
+      213: -1456784680102154141
+    second: wizard idle_173
+  - first:
+      213: -6726885248375011399
+    second: wizard idle_174
+  - first:
+      213: 5939263554875512368
+    second: wizard idle_175
+  - first:
+      213: -6487633463734066105
+    second: wizard idle_176
+  - first:
+      213: -2783641451989824199
+    second: wizard idle_177
+  - first:
+      213: 9155255456667634233
+    second: wizard idle_178
+  - first:
+      213: 196475447436341486
+    second: wizard idle_179
+  - first:
+      213: -7693705283090476780
+    second: wizard idle_180
+  - first:
+      213: 1721040605022664307
+    second: wizard idle_181
+  - first:
+      213: 5235547890481445586
+    second: wizard idle_182
+  - first:
+      213: -2120659488307904150
+    second: wizard idle_183
+  - first:
+      213: 3984717112957129744
+    second: wizard idle_184
+  - first:
+      213: -5878460872974083026
+    second: wizard idle_185
+  - first:
+      213: 6471604863182214540
+    second: wizard idle_186
+  - first:
+      213: 9006215207279481586
+    second: wizard idle_187
+  - first:
+      213: 3965959395496106908
+    second: wizard idle_188
+  - first:
+      213: 8331883412568285674
+    second: wizard idle_189
+  - first:
+      213: 5707004972011441007
+    second: wizard idle_190
+  - first:
+      213: 5628302143541859506
+    second: wizard idle_191
+  - first:
+      213: -6407412016490136192
+    second: wizard idle_192
+  - first:
+      213: -8543772686456834859
+    second: wizard idle_193
+  - first:
+      213: -8123274812892796557
+    second: wizard idle_194
+  - first:
+      213: -134072129535500123
+    second: wizard idle_195
+  - first:
+      213: 5037569073196317173
+    second: wizard idle_196
+  - first:
+      213: -7838111787755146789
+    second: wizard idle_197
+  - first:
+      213: 4516443980108848755
+    second: wizard idle_198
+  - first:
+      213: -7215251258635490092
+    second: wizard idle_199
+  - first:
+      213: 8108194513438704640
+    second: wizard idle_200
+  - first:
+      213: -8851931851147969362
+    second: wizard idle_201
+  - first:
+      213: -5500925118152770266
+    second: wizard idle_202
+  - first:
+      213: 525721615251425259
+    second: wizard idle_203
+  - first:
+      213: -2184245912112241036
+    second: wizard idle_204
+  - first:
+      213: -809985481872865690
+    second: wizard idle_205
+  - first:
+      213: 8633116892388950386
+    second: wizard idle_206
+  - first:
+      213: 1191562544062680612
+    second: wizard idle_207
+  - first:
+      213: -3985330654478046273
+    second: wizard idle_208
+  - first:
+      213: 2901131277750026815
+    second: wizard idle_209
+  - first:
+      213: 901134681117339993
+    second: wizard idle_210
+  - first:
+      213: 3964961514182211184
+    second: wizard idle_211
+  - first:
+      213: -5573912979785048830
+    second: wizard idle_212
+  - first:
+      213: -5175675984646492041
+    second: wizard idle_213
+  - first:
+      213: -615308978798931837
+    second: wizard idle_214
+  - first:
+      213: -5275169897414383490
+    second: wizard idle_215
+  - first:
+      213: -1190049138842095912
+    second: wizard idle_216
+  - first:
+      213: -1899798689963091038
+    second: wizard idle_217
+  - first:
+      213: -6064244098110863462
+    second: wizard idle_218
+  - first:
+      213: -8661700255239719799
+    second: wizard idle_219
+  - first:
+      213: -4564466409217165193
+    second: wizard idle_220
+  - first:
+      213: -5083189500664235377
+    second: wizard idle_221
+  - first:
+      213: -7359512310949259669
+    second: wizard idle_222
+  - first:
+      213: 2569634787496688103
+    second: wizard idle_223
+  - first:
+      213: 8515163391891936276
+    second: wizard idle_224
+  - first:
+      213: 2993299887685681937
+    second: wizard idle_225
+  - first:
+      213: -2815190180118990866
+    second: wizard idle_226
+  - first:
+      213: 9168443925178911429
+    second: wizard idle_227
+  - first:
+      213: -2648798295013729958
+    second: wizard idle_228
+  - first:
+      213: -4876303309284988279
+    second: wizard idle_229
+  - first:
+      213: 5006375148482833665
+    second: wizard idle_230
+  - first:
+      213: 3611876751594940850
+    second: wizard idle_231
+  - first:
+      213: -5846592731953238007
+    second: wizard idle_232
+  - first:
+      213: 7787202790181323407
+    second: wizard idle_233
+  - first:
+      213: -5620675664649749291
+    second: wizard idle_234
+  - first:
+      213: 7248559194145243869
+    second: wizard idle_235
+  - first:
+      213: 5519135769290008753
+    second: wizard idle_236
+  - first:
+      213: -5377742549427101
+    second: wizard idle_237
+  - first:
+      213: -818450205527919926
+    second: wizard idle_238
+  - first:
+      213: -4076124432296168763
+    second: wizard idle_239
+  - first:
+      213: -3713376583921588006
+    second: wizard idle_240
+  - first:
+      213: -4076678092036950902
+    second: wizard idle_241
+  - first:
+      213: -1120151574033825033
+    second: wizard idle_242
+  - first:
+      213: 9040315362357321235
+    second: wizard idle_243
+  - first:
+      213: -8424800970251874632
+    second: wizard idle_244
+  - first:
+      213: 8939474164930965350
+    second: wizard idle_245
+  - first:
+      213: -3765632015178752892
+    second: wizard idle_246
+  - first:
+      213: -4025600611154278999
+    second: wizard idle_247
+  - first:
+      213: -1916227108631231216
+    second: wizard idle_248
+  - first:
+      213: -7758849617277997013
+    second: wizard idle_249
+  - first:
+      213: -5805711184179523499
+    second: wizard idle_250
+  - first:
+      213: -4525217866557233618
+    second: wizard idle_251
+  - first:
+      213: -3210470761879705336
+    second: wizard idle_252
+  - first:
+      213: 1627391854991667373
+    second: wizard idle_253
+  - first:
+      213: 678272036940332292
+    second: wizard idle_254
+  - first:
+      213: -6840641582502952696
+    second: wizard idle_255
+  - first:
+      213: -8532337561083647546
+    second: wizard idle_256
+  - first:
+      213: 7083509377736401930
+    second: wizard idle_257
+  - first:
+      213: -4194498437620578978
+    second: wizard idle_258
+  - first:
+      213: 3663569313421327606
+    second: wizard idle_259
+  - first:
+      213: 8188713063092631041
+    second: wizard idle_260
+  - first:
+      213: -7838742301480470793
+    second: wizard idle_261
+  - first:
+      213: -1477263480353920076
+    second: wizard idle_262
+  - first:
+      213: -5845356438217111166
+    second: wizard idle_263
+  - first:
+      213: -4705582294941798396
+    second: wizard idle_264
+  - first:
+      213: 7211837826667057675
+    second: wizard idle_265
+  - first:
+      213: -2122352397956701642
+    second: wizard idle_266
+  - first:
+      213: -79946201697858906
+    second: wizard idle_267
+  - first:
+      213: 5253949417199057461
+    second: wizard idle_268
+  - first:
+      213: -1732448482381448965
+    second: wizard idle_269
+  - first:
+      213: -7644003676013787279
+    second: wizard idle_270
+  - first:
+      213: 4572293242111448781
+    second: wizard idle_271
+  - first:
+      213: 2694712249052938026
+    second: wizard idle_272
+  - first:
+      213: -2719480420207771758
+    second: wizard idle_273
+  - first:
+      213: -6245714744753934682
+    second: wizard idle_274
+  - first:
+      213: 4367415221558618503
+    second: wizard idle_275
+  - first:
+      213: -9175264495821036948
+    second: wizard idle_276
+  - first:
+      213: -1951324155333387550
+    second: wizard idle_277
+  - first:
+      213: -2191576107326534492
+    second: wizard idle_278
+  - first:
+      213: -2420177240417684616
+    second: wizard idle_279
+  - first:
+      213: -2317028795414572939
+    second: wizard idle_280
+  - first:
+      213: 5630041739072959826
+    second: wizard idle_281
+  - first:
+      213: -3208564234294664711
+    second: wizard idle_282
+  - first:
+      213: -4970941807840849737
+    second: wizard idle_283
+  - first:
+      213: -3754069588015757991
+    second: wizard idle_284
+  - first:
+      213: -6708691383492696489
+    second: wizard idle_285
+  - first:
+      213: 3495624797465324634
+    second: wizard idle_286
+  - first:
+      213: 764442552358747042
+    second: wizard idle_287
+  - first:
+      213: -8597815661483366529
+    second: wizard idle_288
+  - first:
+      213: -8895271080068281137
+    second: wizard idle_289
+  - first:
+      213: -6278509037203740954
+    second: wizard idle_290
+  - first:
+      213: 4650779474973069697
+    second: wizard idle_291
+  - first:
+      213: -1580822540792808594
+    second: wizard idle_292
+  - first:
+      213: -1884743380241852805
+    second: wizard idle_293
+  - first:
+      213: 9017929509373099931
+    second: wizard idle_294
+  - first:
+      213: -4834578156834946828
+    second: wizard idle_295
+  - first:
+      213: 9185939838350357496
+    second: wizard idle_296
+  - first:
+      213: 1426099538227627654
+    second: wizard idle_297
+  - first:
+      213: -5675435058876928858
+    second: wizard idle_298
+  - first:
+      213: 2419055418444824755
+    second: wizard idle_299
+  - first:
+      213: -6162944513771346390
+    second: wizard idle_300
+  - first:
+      213: -7521157847329403392
+    second: wizard idle_301
+  - first:
+      213: -4680254368424629821
+    second: wizard idle_302
+  - first:
+      213: 1276135897923629315
+    second: wizard idle_303
+  - first:
+      213: -9051166920116655289
+    second: wizard idle_304
+  - first:
+      213: 2335218746597359386
+    second: wizard idle_305
+  - first:
+      213: -2894479861937119645
+    second: wizard idle_306
+  - first:
+      213: -2229691018361533121
+    second: wizard idle_307
+  - first:
+      213: 5684050790424250294
+    second: wizard idle_308
+  - first:
+      213: -1637310726755022505
+    second: wizard idle_309
+  - first:
+      213: 5347549339069714843
+    second: wizard idle_310
+  - first:
+      213: 8667857022483618497
+    second: wizard idle_311
+  - first:
+      213: 2260559307299574156
+    second: wizard idle_312
+  - first:
+      213: 9093549387580953522
+    second: wizard idle_313
+  - first:
+      213: 5836773626473255842
+    second: wizard idle_314
+  - first:
+      213: 1973306303523597513
+    second: wizard idle_315
+  - first:
+      213: -7471167638798105423
+    second: wizard idle_316
+  - first:
+      213: -7575074967247049203
+    second: wizard idle_317
+  - first:
+      213: 2220558694652696256
+    second: wizard idle_318
+  - first:
+      213: -5885777599772150838
+    second: wizard idle_319
+  - first:
+      213: -5266962703238048119
+    second: wizard idle_320
+  - first:
+      213: 6774838638455434003
+    second: wizard idle_321
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: wizard idle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22f53fb501d7a4af0800000000000000
+      internalID: -411378906735354078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f78105e1f2204f900800000000000000
+      internalID: 717200642054035583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7d5c3abc8efa8d40800000000000000
+      internalID: 5587558168079916414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b27c41fccefd16d0800000000000000
+      internalID: -3017976019093261647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_4
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32bb86c766cd8feb0800000000000000
+      internalID: -4685753079546987741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e75f85ac4109e3f0800000000000000
+      internalID: -871163624212703264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a26f14db1d67ee0800000000000000
+      internalID: -1263592034645169598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_7
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c0879ce76820f960800000000000000
+      internalID: 7633645795209085125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_8
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74506e0a3416e2800800000000000000
+      internalID: 589515544322245959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wizard idle_9
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aad7618ea901b690800000000000000
+      internalID: -7588273252042548576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

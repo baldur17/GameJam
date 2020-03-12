@@ -109,6 +109,7 @@
           <e p="PhysicsObject.cs" t="Include" />
           <e p="Player" t="Include">
             <e p="PlayerController.cs" t="Include" />
+            <e p="SwordDetection.cs" t="Include" />
           </e>
         </e>
       </e>
