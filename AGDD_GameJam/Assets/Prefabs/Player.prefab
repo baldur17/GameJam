@@ -150,7 +150,9 @@ MonoBehaviour:
   jumpSpeed: 400
   jumpTime: 0.4
   slideTime: 0.4
-  _isGrounded: 0
+  ledgeLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3

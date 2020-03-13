@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     public float jumpTime;
     public float slideTime;
+
+    [Header("Other")] 
+    public LayerMask ledgeLayer;
     
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
@@ -26,12 +29,16 @@ public class PlayerController : MonoBehaviour
     private bool _bButton;
     private bool _xButton;
     private bool _yButton;
-    public bool _isGrounded;
+    private bool _isGrounded;
     private float _slideTime;
     private bool _isRunning;
     private bool _isSliding;
     private bool _isIdle;
     private bool _isFalling;
+    private Vector2 _ledgeColliderPosition;
+    private float _grabTimer;
+    private float _grabRate;
+    
 
     private Animator _animator;
     //Cached properties, faster according to overlord Rider
@@ -41,14 +48,20 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsCrouching = Animator.StringToHash("IsCrouching");
     private static readonly int IsSliding = Animator.StringToHash("IsSliding");
     private static readonly int Attack1 = Animator.StringToHash("Attack1");
+    private static readonly int IsGrabbing = Animator.StringToHash("IsGrabbing");
 
     // Start is called before the first frame update
     private void Start()
     {
+        //_grabTimer control if player can grab, _grabRate is how long until player can try to grab again
+        _grabTimer = 0f;
+        _grabRate = 0.5f;
+        
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _isGrounded = false;
         _slideTime = 100f;
         _animator = gameObject.GetComponent<Animator>();
+        _ledgeColliderPosition = transform.position;
     }
     
 
@@ -63,6 +76,12 @@ public class PlayerController : MonoBehaviour
         
         //Flip the sprite according to horizontal velocity
         FlipSprite();
+        SetLedgerColliderPosition();
+
+        if (Time.time >= _grabTimer)
+        {
+            LedgeCheck();
+        }
     }
 
     private void FixedUpdate()
@@ -92,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
         //Setting rigidbody velocity equal to changed velocity
         _rb.velocity = velocity;
+        Debug.Log(_rb.velocity.y);
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
     
@@ -205,11 +225,28 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
             //Player is standing on the ground
+            
+        }
+        else if (_aButton && Math.Abs(_rb.gravityScale) < 0.1f)
+        {
+            //Start jumping
+            velocity.y = jumpSpeed * Time.fixedDeltaTime;
+            _isGrounded = false;
+            //Player is jumping
+            _animator.SetBool(IsJumping, true);
+            _animator.SetBool(IsFalling, false);
+            _animator.SetBool(IsGrabbing, false);
+
+            //Set gravity scale back
+            _rb.gravityScale = 1;
+            _grabTimer = Time.time + _grabRate;
+
         }
         //TODO Look into other conditions here like walking of a platform would make you fall
 
-        if (velocity.y < 0 && !_isGrounded)
+        if (velocity.y < 0)
         {
+            _isGrounded = false;
             //Set animation conditions
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, true);
@@ -219,6 +256,9 @@ public class PlayerController : MonoBehaviour
 
     private void CrouchMovement()
     {
+        _grabTimer = Time.time + _grabRate;
+        _rb.gravityScale = 1;
+        _animator.SetBool(IsGrabbing, false);
         _animator.SetBool(IsCrouching, true);
     }
 
@@ -235,6 +275,7 @@ public class PlayerController : MonoBehaviour
     {
         //Flip sprite according to velocity.x
         //Do nothing if velocity is exactly 0 to remember last direction
+
         if (_rb.velocity.x < 0)
         {
             spriteRenderer.flipX = true;
@@ -244,7 +285,36 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
         }
     }
-    
+
+    private void SetLedgerColliderPosition()
+    {
+        var position = transform.position;
+        if (spriteRenderer.flipX)
+        {
+            _ledgeColliderPosition = new Vector2(-0.29f + position.x, 0.5f + position.y);
+        }
+        else
+        {
+            _ledgeColliderPosition = new Vector2(0.29f + position.x, 0.5f + position.y);
+        }
+    }
+
+    private void LedgeCheck()
+    {
+        Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(_ledgeColliderPosition, 0.1f, ledgeLayer);
+        
+        foreach (var ledge in ledgeDetected)
+        {
+            _animator.SetBool(IsGrabbing, true);
+            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(_ledgeColliderPosition, 0.1f);
+    }
+
     //TODO Should we limit player movement during attack animation?  maybe
     //TODO Should player be able to stop mid slide? nope
     //TODO Should we increase speed during slide? possibly
@@ -252,5 +322,4 @@ public class PlayerController : MonoBehaviour
     
     
     //TODO Player or material must have no friction(or low?) material else he gets stuck
-    
 }
