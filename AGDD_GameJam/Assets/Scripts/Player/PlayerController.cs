@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed;
     public float crouchSpeed;
     public float jumpSpeed;
+    public float slideSpeed;
     public float jumpTime;
     public float slideTime;
 
@@ -181,6 +182,7 @@ public class PlayerController : MonoBehaviour
                     _isSliding = true;
                     _slideTime = 0f;
                     _animator.SetBool(IsSliding, true);
+                    velocity.x = slideSpeed * Time.fixedDeltaTime * Mathf.Sign(_leftJoystickHorizontal);
                 }
             }
         }
