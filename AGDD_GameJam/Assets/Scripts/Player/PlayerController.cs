@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour
         }
         //TODO Look into other conditions here like walking of a platform would make you fall
 
-        if (velocity.y < 0)
+        if (velocity.y < -0.1f)
         {
             _isGrounded = false;
             //Set animation conditions
@@ -278,14 +278,17 @@ public class PlayerController : MonoBehaviour
         //Flip sprite according to velocity.x
         //Do nothing if velocity is exactly 0 to remember last direction
 
-        if (_rb.velocity.x < 0)
+        Vector3 scale = transform.localScale;
+        if (_rb.velocity.x < -0.1f)
         {
-            spriteRenderer.flipX = true;
+            scale.x = -Mathf.Abs(transform.localScale.x);
         }
-        else if (_rb.velocity.x > 0)
+        else if (_rb.velocity.x > 0.1f)
         {
-            spriteRenderer.flipX = false;
+            scale.x = Mathf.Abs(transform.localScale.x);
         }
+
+        transform.localScale = scale;
     }
 
     private void SetLedgerColliderPosition()
