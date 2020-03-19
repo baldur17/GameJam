@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public float crouchSpeed;
     public float jumpSpeed;
     public float slideSpeed;
-    public float jumpTime;
     public float slideTime;
+    public float slideRate;
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     private bool _xButton;
     private bool _yButton;
     private bool _isGrounded;
-    private float _slideTime;
     private bool _isRunning;
     private bool _isSliding;
     private bool _isIdle;
@@ -39,6 +38,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 _ledgeColliderPosition;
     private float _grabTimer;
     private float _grabRate;
+    //_slideTime is how long the player slides for i.e the animation
+    //_slideTimer control if the player can slide again
+    private float _slideTime;
+    private float _slideTimer;
     
 
     private Animator _animator;
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
         //_grabTimer control if player can grab, _grabRate is how long until player can try to grab again
         _grabTimer = 0f;
         _grabRate = 0.5f;
+        _slideTimer = 0f;
         
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _isGrounded = false;
@@ -176,11 +180,13 @@ public class PlayerController : MonoBehaviour
                 //Play run animation
                 //Player is grounded and moving left/right, so disable crouch and crouch animation
                 _animator.SetBool(IsCrouching, false);
-                if (_yButton && !_isSliding)
+                //Player wants to slide, is not currently sliding and he can slide according to slideRate
+                if (_yButton && !_isSliding && Time.time >= _slideTimer)
                 {
                     //Player is running and grounded and wants to slide
                     _isSliding = true;
                     _slideTime = 0f;
+                    _slideTimer = Time.time + slideRate;
                     _animator.SetBool(IsSliding, true);
                     velocity.x = slideSpeed * Time.fixedDeltaTime * Mathf.Sign(_leftJoystickHorizontal);
                 }

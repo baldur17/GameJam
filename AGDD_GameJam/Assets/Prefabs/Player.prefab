@@ -150,8 +150,8 @@ MonoBehaviour:
   crouchSpeed: 0
   jumpSpeed: 400
   slideSpeed: 425
-  jumpTime: 0.4
   slideTime: 0.4
+  slideRate: 1
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 256
