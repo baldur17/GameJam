@@ -9,10 +9,13 @@ namespace Enemy
         // Variable to set the death animation
         private static readonly int IsDead = Animator.StringToHash("IsDead");
 
+        public bool isDead;
+
+        
         // Start is called before the first frame update
         void Start()
         {
-        
+            isDead = false;
             _animator = gameObject.GetComponent<Animator>();
         }
 
@@ -27,6 +30,7 @@ namespace Enemy
         /// <param name="damage">amount of damage enemy takes</param>
         public void Hit(int damage)
         {
+            isDead = true;
             // Set player as dead
             _animator.SetBool("IsDead", true);
         }
@@ -40,5 +44,9 @@ namespace Enemy
         {
             throw new System.NotImplementedException();
         }
+        
+        
+        
+        
     }
 }
