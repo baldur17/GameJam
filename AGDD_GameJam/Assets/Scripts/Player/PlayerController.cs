@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour
     private void SetLedgerColliderPosition()
     {
         var position = transform.position;
-        if (spriteRenderer.flipX)
+        if (transform.localScale.x <= 0)
         {
             _ledgeColliderPosition = new Vector2(-0.29f + position.x, 0.5f + position.y);
         }

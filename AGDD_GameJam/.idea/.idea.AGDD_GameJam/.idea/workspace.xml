@@ -25,12 +25,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/IEnemy.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/SwordDetection.cs" />
         <option value="$PROJECT_DIR$/Assets/EnemyDetection.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyDetection.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemy/Patrol.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" />
       </list>
     </option>
   </component>
@@ -79,7 +79,7 @@
       <updated>1583945194804</updated>
       <workItem from="1583945203242" duration="673000" />
       <workItem from="1584024716717" duration="6184000" />
-      <workItem from="1584092652044" duration="8248000" />
+      <workItem from="1584092652044" duration="9471000" />
     </task>
     <servers />
   </component>
