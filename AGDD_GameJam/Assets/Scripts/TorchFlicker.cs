@@ -8,11 +8,14 @@ public class TorchFlicker : MonoBehaviour
     public float maxReduction;
     public float maxIncrease;
     public float rateDamping;
+    public float maxRangeReduction;
+    public float maxRangeIncrease;
     public float strength;
     public bool stopFlickering;
  
     private Light2D _lightSource;
     private float _baseIntensity;
+    private float _baseRange;
     private bool _flickering;
  
     public void Reset()
@@ -32,6 +35,7 @@ public class TorchFlicker : MonoBehaviour
             return;
         }
         _baseIntensity = _lightSource.intensity;
+        _baseRange = _lightSource.pointLightOuterRadius;
         StartCoroutine(DoFlicker());
     }
  
@@ -49,6 +53,7 @@ public class TorchFlicker : MonoBehaviour
         while (!stopFlickering)
         {
             _lightSource.intensity = Mathf.Lerp(_lightSource.intensity, Random.Range(_baseIntensity - maxReduction, _baseIntensity + maxIncrease), strength * Time.deltaTime);
+            _lightSource.pointLightOuterRadius = Mathf.Lerp(_lightSource.pointLightOuterRadius, Random.Range(_baseRange - maxRangeReduction, _baseRange + maxRangeIncrease), strength * Time.deltaTime);
             yield return new WaitForSeconds(rateDamping);
         }
         _flickering = false;

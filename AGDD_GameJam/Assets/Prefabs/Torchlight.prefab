@@ -88,5 +88,7 @@ MonoBehaviour:
   maxReduction: 0.3
   maxIncrease: 0.3
   rateDamping: 0.3
+  maxRangeReduction: 0.1
+  maxRangeIncrease: 0.1
   strength: 300
   stopFlickering: 0
