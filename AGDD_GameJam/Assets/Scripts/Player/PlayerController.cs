@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         _grabRate = 0.5f;
         _slideTimer = 0f;
         //Small cooldown on jump to allow for ledge grab to work properly, not meant as an actual cooldown
-        _jumpRate = 0.1f;
+        _jumpRate = 0.5f;
         _jumpTimer = 0f;
         
         //Initialize variables
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _leftJoystickHorizontal = Input.GetAxis("LeftJoystickHorizontal");
-        _aButton = Input.GetButtonDown("AButton");
+        _aButton = Input.GetButton("AButton");
         _bButton = Input.GetButton("BButton");
         _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
     /// Sets _isGrounded if player is in contact with ground
     /// </summary>
     /// <param name="other"></param>
-    private void OnCollisionStay2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         List<ContactPoint2D> collisionList = other.contacts.ToList();
         
@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+        
         _isGrounded = false;
     }
     /// <summary>
@@ -189,6 +190,7 @@ public class PlayerController : MonoBehaviour
         {
             //Move Horizontally
             //Set velocity.x according to controlled input, ignore if player is sliding
+            Debug.Log(_isLedgeGrabbing);
             if(!_isSliding && !_isLedgeGrabbing) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
             if (_isGrounded)
             {
@@ -233,13 +235,17 @@ public class PlayerController : MonoBehaviour
     {
         
         _animator.SetBool(IsFalling, false);
-        
-        //If A is pressed and player is grounded
-        if (_aButton && _isGrounded)
+        //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
+        if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
         {
+
+            //Cooldown of jump to allow for ledge grab
+            _jumpTimer = Time.time + _jumpRate;
+            
             //Start jumping
             velocity.y = jumpSpeed * Time.fixedDeltaTime;
             _isGrounded = false;
+            _isLedgeGrabbing = false;
             //Player is jumping
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
@@ -253,7 +259,8 @@ public class PlayerController : MonoBehaviour
             //Player is standing on the ground
             
         }
-        else if (_aButton && Math.Abs(_rb.gravityScale) < 0.1f && Time.time >= _jumpTimer)
+        /*
+        else if (_aButton && (Math.Abs(_rb.gravityScale) < 0.1f || Time.time >= _jumpTimer))
         {
             //Cooldown of jump to allow for ledge grab
             _jumpTimer = Time.time + _jumpRate;
@@ -272,7 +279,7 @@ public class PlayerController : MonoBehaviour
             _grabTimer = Time.time + _grabRate;
 
         }
-        //TODO Look into other conditions here like walking of a platform would make you fall
+        */
 
         if (velocity.y < -0.1f)
         {

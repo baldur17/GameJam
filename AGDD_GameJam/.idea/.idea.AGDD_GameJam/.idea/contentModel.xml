@@ -113,6 +113,7 @@
             <e p="PlayerController.cs" t="Include" />
             <e p="SwordDetection.cs" t="Include" />
           </e>
+          <e p="TorchFlicker.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
