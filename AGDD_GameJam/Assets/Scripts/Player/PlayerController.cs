@@ -343,6 +343,7 @@ public class PlayerController : MonoBehaviour
         var transform1 = transform;
         var position = transform1.position;
         _ledgeColliderPosition = transform1.localScale.x < 0 ? new Vector2(-0.29f + position.x, 0.5f + position.y) : new Vector2(0.29f + position.x, 0.5f + position.y);
+
     }
 
     
