@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public float crouchSpeed;
     public float jumpSpeed;
     public float slideSpeed;
-    public float jumpTime;
     public float slideTime;
+    public float slideRate;
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
@@ -31,14 +31,20 @@ public class PlayerController : MonoBehaviour
     private bool _xButton;
     private bool _yButton;
     private bool _isGrounded;
-    private float _slideTime;
     private bool _isRunning;
     private bool _isSliding;
     private bool _isIdle;
     private bool _isFalling;
+    private bool _isLedgeGrabbing;
     private Vector2 _ledgeColliderPosition;
     private float _grabTimer;
     private float _grabRate;
+    private float _jumpTimer;
+    private float _jumpRate;
+    //_slideTime is how long the player slides for i.e the animation
+    //_slideTimer control if the player can slide again
+    private float _slideTime;
+    private float _slideTimer;
     
 
     private Animator _animator;
@@ -57,9 +63,15 @@ public class PlayerController : MonoBehaviour
         //_grabTimer control if player can grab, _grabRate is how long until player can try to grab again
         _grabTimer = 0f;
         _grabRate = 0.5f;
+        _slideTimer = 0f;
+        //Small cooldown on jump to allow for ledge grab to work properly, not meant as an actual cooldown
+        _jumpRate = 0.5f;
+        _jumpTimer = 0f;
         
+        //Initialize variables
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _isGrounded = false;
+        _isLedgeGrabbing = false;
         _slideTime = 100f;
         _animator = gameObject.GetComponent<Animator>();
         _ledgeColliderPosition = transform.position;
@@ -100,7 +112,6 @@ public class PlayerController : MonoBehaviour
         }
         
         velocity = HorizontalMovement(velocity);
-        //If isSliding and counter is up stop sliding
         
         if (_xButton)
         {
@@ -112,11 +123,14 @@ public class PlayerController : MonoBehaviour
 
         //Setting rigidbody velocity equal to changed velocity
         _rb.velocity = velocity;
-        Debug.Log(_rb.velocity.y);
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
-    
-    private void OnCollisionStay2D(Collision2D other)
+
+    /// <summary>
+    /// Sets _isGrounded if player is in contact with ground
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnCollisionEnter2D(Collision2D other)
     {
         List<ContactPoint2D> collisionList = other.contacts.ToList();
         
@@ -133,6 +147,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// Handles setting the _isGrounded depending on exit collision detection
+    /// </summary>
+    /// <param name="other">All exit collisions</param>
     private void OnCollisionExit2D(Collision2D other)
     {
         List<ContactPoint2D> collisionList = other.contacts.ToList();
@@ -156,6 +175,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+        
         _isGrounded = false;
     }
     /// <summary>
@@ -170,17 +190,20 @@ public class PlayerController : MonoBehaviour
         {
             //Move Horizontally
             //Set velocity.x according to controlled input, ignore if player is sliding
-            if(!_isSliding) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
+            Debug.Log(_isLedgeGrabbing);
+            if(!_isSliding && !_isLedgeGrabbing) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
             if (_isGrounded)
             {
                 //Play run animation
                 //Player is grounded and moving left/right, so disable crouch and crouch animation
                 _animator.SetBool(IsCrouching, false);
-                if (_yButton && !_isSliding)
+                //Player wants to slide, is not currently sliding and he can slide according to slideRate
+                if (_yButton && !_isSliding && Time.time >= _slideTimer)
                 {
                     //Player is running and grounded and wants to slide
                     _isSliding = true;
                     _slideTime = 0f;
+                    _slideTimer = Time.time + slideRate;
                     _animator.SetBool(IsSliding, true);
                     velocity.x = slideSpeed * Time.fixedDeltaTime * Mathf.Sign(_leftJoystickHorizontal);
                 }
@@ -210,27 +233,38 @@ public class PlayerController : MonoBehaviour
     /// <returns>New update velocity of the player</returns>
     private Vector2 VerticalMovement(Vector2 velocity)
     {
-        _animator.SetBool(IsFalling, false);
         
-        //If A is pressed and player is grounded
-        if (_aButton && _isGrounded)
+        _animator.SetBool(IsFalling, false);
+        //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
+        if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
         {
+
+            //Cooldown of jump to allow for ledge grab
+            _jumpTimer = Time.time + _jumpRate;
+            
             //Start jumping
             velocity.y = jumpSpeed * Time.fixedDeltaTime;
             _isGrounded = false;
+            _isLedgeGrabbing = false;
             //Player is jumping
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
+            _animator.SetBool(IsGrabbing, false);
         }
         else if (_isGrounded)
         {
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
+            _animator.SetBool(IsGrabbing, false);
             //Player is standing on the ground
             
         }
-        else if (_aButton && Math.Abs(_rb.gravityScale) < 0.1f)
+        /*
+        else if (_aButton && (Math.Abs(_rb.gravityScale) < 0.1f || Time.time >= _jumpTimer))
         {
+            //Cooldown of jump to allow for ledge grab
+            _jumpTimer = Time.time + _jumpRate;
+            
             //Start jumping
             velocity.y = jumpSpeed * Time.fixedDeltaTime;
             _isGrounded = false;
@@ -238,13 +272,14 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
             _animator.SetBool(IsGrabbing, false);
+            _isLedgeGrabbing = false;
 
             //Set gravity scale back
             _rb.gravityScale = 1;
             _grabTimer = Time.time + _grabRate;
 
         }
-        //TODO Look into other conditions here like walking of a platform would make you fall
+        */
 
         if (velocity.y < -0.1f)
         {
@@ -256,14 +291,23 @@ public class PlayerController : MonoBehaviour
         return velocity;
     }
 
+    /// <summary>
+    /// Plays crouch animation and handles setting gravity back to 1 if player was ledge grabbing
+    /// </summary>
     private void CrouchMovement()
     {
         _grabTimer = Time.time + _grabRate;
         _rb.gravityScale = 1;
         _animator.SetBool(IsGrabbing, false);
+        _isLedgeGrabbing = false;
         _animator.SetBool(IsCrouching, true);
     }
 
+    /// <summary>
+    /// Coroutine that handles setting the attack trigger for just one frame
+    /// </summary>
+    /// <param name="trigger"></param>
+    /// <returns>Void</returns>
     private IEnumerator TriggerOneFrame(int trigger) {
         _animator.SetTrigger(trigger);
         yield return null;
@@ -272,12 +316,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
+    /// <summary>
+    /// Flips player sprite according to velocity.x
+    /// </summary>
     private void FlipSprite()
     {
-        //Flip sprite according to velocity.x
-        //Do nothing if velocity is exactly 0 to remember last direction
-
         Vector3 scale = transform.localScale;
         if (_rb.velocity.x < -0.1f)
         {
@@ -291,26 +335,31 @@ public class PlayerController : MonoBehaviour
         transform.localScale = scale;
     }
 
+    /// <summary>
+    /// Position of collider that detects ledges
+    /// </summary>
     private void SetLedgerColliderPosition()
     {
-        var position = transform.position;
-        if (transform.localScale.x <= 0)
-        {
-            _ledgeColliderPosition = new Vector2(-0.29f + position.x, 0.5f + position.y);
-        }
-        else
-        {
-            _ledgeColliderPosition = new Vector2(0.29f + position.x, 0.5f + position.y);
-        }
+        var transform1 = transform;
+        var position = transform1.position;
+        _ledgeColliderPosition = transform1.localScale.x < 0 ? new Vector2(-0.29f + position.x, 0.5f + position.y) : new Vector2(0.29f + position.x, 0.5f + position.y);
+
     }
 
+    
+    /// <summary>
+    /// Checks collision on ledge layer and handles grabbing ledge if there is collision
+    /// </summary>
     private void LedgeCheck()
     {
         Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(_ledgeColliderPosition, 0.1f, ledgeLayer);
         
         foreach (var ledge in ledgeDetected)
         {
+            //Player is grabbing a ledge
             _animator.SetBool(IsGrabbing, true);
+            _isLedgeGrabbing = true;
+            _rb.gravityScale = 0;
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
         }
     }

@@ -32,7 +32,7 @@ namespace Enemy
         {
             isDead = true;
             // Set player as dead
-            _animator.SetBool("IsDead", true);
+            _animator.SetBool(IsDead, true);
         }
 
         public void Move()
