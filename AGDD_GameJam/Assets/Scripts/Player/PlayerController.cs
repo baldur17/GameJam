@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
 
         //Setting rigidbody velocity equal to changed velocity
         _rb.velocity = velocity;
-        Debug.Log(_rb.velocity.y);
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
     

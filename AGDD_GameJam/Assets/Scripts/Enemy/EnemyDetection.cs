@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Quaternion = UnityEngine.Quaternion;
@@ -41,8 +42,27 @@ namespace Enemy
             Gizmos.DrawLine(transform.TransformPoint(Vector3.zero), transform.TransformPoint(new Vector2(lookDistance, -(lookAngle/2))));
 
         }
-        
-        
-        
+
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            int layerMask = ~(1 << 9);
+            PlayerController player = other.GetComponent<PlayerController>();
+
+            if (player)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Mathf.Infinity, layerMask);
+                
+                if ( hit )
+                {
+                    Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.yellow);
+                    // Debug.Log("Did Hit");
+                    if (hit.collider.name == "Player")
+                    {
+                        Debug.Log("DEATHHHHHHHH");
+                    }
+                }
+            }
+        }
     }
 }

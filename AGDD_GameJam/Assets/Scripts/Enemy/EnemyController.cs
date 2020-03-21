@@ -44,9 +44,6 @@ namespace Enemy
         {
             throw new System.NotImplementedException();
         }
-        
-        
-        
-        
+      
     }
 }
