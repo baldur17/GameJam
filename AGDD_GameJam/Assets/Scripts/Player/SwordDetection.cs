@@ -8,9 +8,11 @@ public class SwordDetection : MonoBehaviour
 {
     private void OnTriggerExit2D(Collider2D other)
     {
-        IEnemy enemy = other.gameObject.GetComponentInParent<IEnemy>();
-        Debug.Log(enemy);
-        enemy?.Hit(1);
+        if (other.name == "Sprite")
+        {
+            IEnemy enemy = other.gameObject.GetComponentInParent<IEnemy>();
+            enemy?.Hit(1);
+        }
     }
 
 }
