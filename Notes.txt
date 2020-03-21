@@ -1,0 +1,7 @@
+Normal map parameters
+	-> Strength = 1.5
+	-> Level = 8
+	-> Blur/Sharp = 0
+
+
+Þarf að laga sprite movement á enemies þegar þeir deyja
