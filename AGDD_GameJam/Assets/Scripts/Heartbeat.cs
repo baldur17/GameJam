@@ -23,7 +23,7 @@ public class Heartbeat : MonoBehaviour
     {
         //Find all heartbeats in the level?
         _coroutineRunning = false;
-        _framesPerBeat = 10;
+        _framesPerBeat = 14;
         _stepsPerBeat = maxIntensity / _framesPerBeat;
         _halfStepsPerBeat = _stepsPerBeat / 2;
 
@@ -56,6 +56,7 @@ public class Heartbeat : MonoBehaviour
         yield return StartCoroutine( HeartBeatTwo() );
         yield return new WaitForSeconds(0.4f);
         _coroutineRunning = false;
+        myLight.intensity -= 0;
     }
     
     private IEnumerator HeartBeatOne()
@@ -93,4 +94,5 @@ public class Heartbeat : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
     }
+    
 }
