@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Timeline;
 using Debug = UnityEngine.Debug;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +22,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float runSpeed;
     public float crouchSpeed;
-    public float jumpSpeed;
     public float slideSpeed;
     public float slideTime;
     public float slideRate;
@@ -29,6 +31,14 @@ public class PlayerController : MonoBehaviour
 
     public float restartDelay;
 
+    [Header("Jump Feel")]
+    public Transform feetPos;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+    public float jumpSpeed;
+    public float jumpTime;
+    
+    
     #endregion
 
     #region Private variables
@@ -36,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
     private bool _aButton;
+    private bool _aButtonHold;
     private bool _bButton;
     private bool _xButton;
     private bool _yButton;
@@ -57,6 +68,10 @@ public class PlayerController : MonoBehaviour
 
     private bool _isDead = false;
     private float _timeSinceDeath;
+
+    private float _jumpTimeCounter;
+    private bool _isJumping;
+    
     
 
     private Animator _animator;
@@ -100,11 +115,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        _leftJoystickHorizontal = Input.GetAxis("LeftJoystickHorizontal");
-        _aButton = Input.GetButton("AButton");
+        _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
+        _aButton = Input.GetButtonDown("AButton");
+        _aButtonHold = Input.GetButton("AButton");
         _bButton = Input.GetButton("BButton");
         _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
+
+        _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         
         //Flip the sprite according to horizontal velocity
         FlipSprite();
@@ -146,11 +164,14 @@ public class PlayerController : MonoBehaviour
             //TODO limit attack rate here or in update function
             StartCoroutine(nameof(TriggerOneFrame), Attack1);
         }
-
+        
         velocity = VerticalMovement(velocity);
 
-        //Setting rigidbody velocity equal to changed velocity
+
         _rb.velocity = velocity;
+
+        //Setting rigidbody velocity equal to changed velocity
+        // _rb.velocity = velocity;
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
 
@@ -160,20 +181,20 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnCollisionEnter2D(Collision2D other)
     {
-        List<ContactPoint2D> collisionList = other.contacts.ToList();
-        
-        //Loop through list of all contacts and see if any of them
-        //Have a normal vector within X range (i.e flat to almost flat ground)
-        //If so we know player is grounded
-        
-        foreach (var contact in collisionList)
-        {
-            Vector2 vec = contact.normal;
-;            if (vec.y >= 0.8f)
-            {
-                _isGrounded = true;
-            }
-        }
+//         List<ContactPoint2D> collisionList = other.contacts.ToList();
+//         
+//         //Loop through list of all contacts and see if any of them
+//         //Have a normal vector within X range (i.e flat to almost flat ground)
+//         //If so we know player is grounded
+//         
+//         foreach (var contact in collisionList)
+//         {
+//             Vector2 vec = contact.normal;
+// ;            if (vec.y >= 0.8f)
+//             {
+//                 _isGrounded = true;
+//             }
+//         }
     }
     
     /// <summary>
@@ -213,12 +234,12 @@ public class PlayerController : MonoBehaviour
     /// <returns>New updated velocity of the player</returns>
     private Vector2 HorizontalMovement(Vector2 velocity)
     {        
+        if (_isDead) return Vector2.zero;
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (_leftJoystickHorizontal != 0f)
         {
             //Move Horizontally
             //Set velocity.x according to controlled input, ignore if player is sliding
-            Debug.Log(_isLedgeGrabbing);
             if(!_isSliding && !_isLedgeGrabbing) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
             if (_isGrounded)
             {
@@ -263,6 +284,29 @@ public class PlayerController : MonoBehaviour
     {
         if (_isDead) return Vector2.zero;
         _animator.SetBool(IsFalling, false);
+        if (Input.GetButtonUp("AButton"))
+        {
+            _isJumping = false;
+        }
+        
+        if ((_isGrounded || _isLedgeGrabbing) && _aButton)
+        {
+            _isJumping = true;
+            _jumpTimeCounter = jumpTime;
+            velocity.y = Vector2.up.y * jumpSpeed;
+        }
+        if (Input.GetButton("AButton") && _isJumping && !(_isLedgeGrabbing))
+        {
+            if (_jumpTimeCounter > 0)
+            {
+                velocity.y = Vector2.up.y * jumpSpeed;
+                _jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                _isJumping = false;
+            }
+        }
         //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
         if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
         {
@@ -271,8 +315,9 @@ public class PlayerController : MonoBehaviour
             _jumpTimer = Time.time + _jumpRate;
             
             //Start jumping
-            velocity.y = jumpSpeed * Time.fixedDeltaTime;
-            _isGrounded = false;
+            
+
+            
             _isLedgeGrabbing = false;
             //Player is jumping
             _animator.SetBool(IsJumping, true);
@@ -381,6 +426,8 @@ public class PlayerController : MonoBehaviour
     private void LedgeCheck()
     {
         Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(_ledgeColliderPosition, 0.1f, ledgeLayer);
+
+        if (_jumpTimeCounter >= jumpTime - 0.1f) return;
         
         foreach (var ledge in ledgeDetected)
         {
