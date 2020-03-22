@@ -261,7 +261,7 @@ public class PlayerController : MonoBehaviour
     /// <returns>New update velocity of the player</returns>
     private Vector2 VerticalMovement(Vector2 velocity)
     {
-        
+        if (_isDead) return Vector2.zero;
         _animator.SetBool(IsFalling, false);
         //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
         if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
