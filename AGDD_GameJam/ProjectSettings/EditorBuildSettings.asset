@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/mergedMap.unity
+    guid: 531b1117a39491e439886d3875b6994c
   m_configObjects: {}

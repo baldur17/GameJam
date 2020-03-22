@@ -2,6 +2,7 @@
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -13,6 +14,8 @@ namespace Enemy
 
         public float lookDistance;
         public float lookAngle;
+
+        [FormerlySerializedAs("ExclamationGameObject")] public GameObject exclamationGameObject;
 
         private PolygonCollider2D _collider;
         
@@ -43,23 +46,30 @@ namespace Enemy
 
         }
 
-
+        /// <summary>
+        /// Trigger for detection collision
+        /// </summary>
+        /// <param name="other"></param>
         private void OnTriggerStay2D(Collider2D other)
         {
+            // Layermask for every layer except the 9th layer
             int layerMask = ~(1 << 9);
             PlayerController player = other.GetComponent<PlayerController>();
 
             if (player)
             {
+                // Raycast to the position of player
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Mathf.Infinity, layerMask);
                 
                 if ( hit )
                 {
                     Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.yellow);
-                    // Debug.Log("Did Hit");
+                    // If the raycast collides with player
                     if (hit.collider.name == "Player")
                     {
-                        Debug.Log("DEATHHHHHHHH");
+                        player.Detected();
+                        exclamationGameObject.GetComponent<SpriteRenderer>().enabled = true;
+
                     }
                 }
             }

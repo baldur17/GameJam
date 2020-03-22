@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Timeline;
 using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +13,9 @@ public class PlayerController : MonoBehaviour
     //runSpeed = 100, then max speed is -2 / 2
 
     public SpriteRenderer spriteRenderer;
-    
+
+    #region Public variables
+
     [Header("Movement")]
     public float runSpeed;
     public float crouchSpeed;
@@ -23,7 +26,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
-    
+
+    public float restartDelay;
+
+    #endregion
+
+    #region Private variables
+
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
     private bool _aButton;
@@ -45,6 +54,9 @@ public class PlayerController : MonoBehaviour
     //_slideTimer control if the player can slide again
     private float _slideTime;
     private float _slideTimer;
+
+    private bool _isDead = false;
+    private float _timeSinceDeath;
     
 
     private Animator _animator;
@@ -56,6 +68,10 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsSliding = Animator.StringToHash("IsSliding");
     private static readonly int Attack1 = Animator.StringToHash("Attack1");
     private static readonly int IsGrabbing = Animator.StringToHash("IsGrabbing");
+    private static readonly int IsDead = Animator.StringToHash("IsDead");
+    
+
+    #endregion
 
     // Start is called before the first frame update
     private void Start()
@@ -67,6 +83,9 @@ public class PlayerController : MonoBehaviour
         //Small cooldown on jump to allow for ledge grab to work properly, not meant as an actual cooldown
         _jumpRate = 0.5f;
         _jumpTimer = 0f;
+        
+        // Reset the time since death
+        _timeSinceDeath = 0f;
         
         //Initialize variables
         _rb = gameObject.GetComponent<Rigidbody2D>();
@@ -94,6 +113,15 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= _grabTimer)
         {
             LedgeCheck();
+        }
+
+        if (_timeSinceDeath >= restartDelay && _isDead)
+        {
+            GameManager.instance.RestartLevel();
+        }
+        if (_isDead)
+        {
+            _timeSinceDeath += Time.deltaTime;
         }
     }
 
@@ -367,6 +395,15 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_ledgeColliderPosition, 0.1f);
+    }
+
+    public void Detected()
+    {
+        if (_isDead) return;
+        _animator.SetBool(IsDead, true);
+        _isDead = true;
+        _timeSinceDeath = 0f;
+
     }
 
     //TODO Should we limit player movement during attack animation?  maybe
