@@ -102,12 +102,15 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="CameraMovementController.cs" t="Include" />
+          <e p="Destroyer.cs" t="Include" />
           <e p="Enemy" t="Include">
             <e p="EnemyController.cs" t="Include" />
             <e p="EnemyDetection.cs" t="Include" />
             <e p="IEnemy.cs" t="Include" />
             <e p="Patrol.cs" t="Include" />
           </e>
+          <e p="GameManager.cs" t="Include" />
           <e p="Heartbeat.cs" t="Include" />
           <e p="Parallex.cs" t="Include" />
           <e p="PhysicsObject.cs" t="Include" />
