@@ -129,12 +129,16 @@ public class PlayerController : MonoBehaviour
         _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
 
-        _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+        // _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         
         //Flip the sprite according to horizontal velocity
         FlipSprite();
         SetLedgerColliderPosition();
 
+        var velocity = _rb.velocity;
+        velocity = VerticalMovement(velocity);
+        _rb.velocity = velocity;
+        
         if (Time.time >= _grabTimer)
         {
             LedgeCheck();
@@ -162,6 +166,8 @@ public class PlayerController : MonoBehaviour
         {
             _spawnDust = true;
         }
+
+        
     }
 
     private void FixedUpdate()
@@ -200,8 +206,7 @@ public class PlayerController : MonoBehaviour
             //TODO limit attack rate here or in update function
             StartCoroutine(nameof(TriggerOneFrame), Attack1);
         }
-        
-        velocity = VerticalMovement(velocity);
+
 
 
         _rb.velocity = velocity;
@@ -217,20 +222,20 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnCollisionEnter2D(Collision2D other)
     {
-//         List<ContactPoint2D> collisionList = other.contacts.ToList();
-//         
-//         //Loop through list of all contacts and see if any of them
-//         //Have a normal vector within X range (i.e flat to almost flat ground)
-//         //If so we know player is grounded
-//         
-//         foreach (var contact in collisionList)
-//         {
-//             Vector2 vec = contact.normal;
-// ;            if (vec.y >= 0.8f)
-//             {
-//                 _isGrounded = true;
-//             }
-//         }
+        List<ContactPoint2D> collisionList = other.contacts.ToList();
+        
+        //Loop through list of all contacts and see if any of them
+        //Have a normal vector within X range (i.e flat to almost flat ground)
+        //If so we know player is grounded
+        
+        foreach (var contact in collisionList)
+        {
+            Vector2 vec = contact.normal;
+;            if (vec.y >= 0.8f)
+            {
+                _isGrounded = true;
+            }
+        }
     }
     
     /// <summary>
@@ -329,8 +334,9 @@ public class PlayerController : MonoBehaviour
             _isJumping = false;
         }
         
+        print(Input.GetButtonDown("AButton"));
         // If player is on ground or ledge, he should begin jumping if jump button is pressed
-        if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && Input.GetButtonDown("AButton"))
+        if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && _aButton)
         {
             //Cooldown of jump to allow for ledge grab
             _jumpTimer = Time.time + _jumpRate;
@@ -346,7 +352,6 @@ public class PlayerController : MonoBehaviour
             
             //Player is jumping
             _isLedgeGrabbing = false;
-            Debug.Log("TRUE");
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
             _animator.SetBool(IsGrabbing, false);
@@ -375,7 +380,6 @@ public class PlayerController : MonoBehaviour
         // }
         if (_isGrounded && !_isJumping)
         {
-            Debug.Log("FALSE");
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
             _animator.SetBool(IsGrabbing, false);
