@@ -22,5 +22,7 @@ namespace Enemy
         /// <param name="player">Instance of the player</param>
         /// <returns>True if enemy is detected, false if not</returns>
         bool IsDetected(PlayerController player);
+
+        void PlayAnimation();
     }
 }

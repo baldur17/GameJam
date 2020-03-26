@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class SwordDetection : MonoBehaviour
 {
+
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Sprite")
+        if (other.CompareTag($"Enemy"))
         {
+            Debug.Log($"Enemy");
             IEnemy enemy = other.gameObject.GetComponentInParent<IEnemy>();
             enemy?.Hit(1);
+            enemy?.PlayAnimation();
         }
     }
-
 }

@@ -3,8 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using UnityEngine;
+using UnityEngine.Timeline;
 using Debug = UnityEngine.Debug;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,18 +17,38 @@ public class PlayerController : MonoBehaviour
     //runSpeed = 100, then max speed is -2 / 2
 
     public SpriteRenderer spriteRenderer;
-    
+
+    #region Public variables
+
     [Header("Movement")]
     public float runSpeed;
     public float crouchSpeed;
-    public float jumpSpeed;
     public float slideSpeed;
     public float slideTime;
     public float slideRate;
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
-    
+
+    public float restartDelay;
+
+    [Header("Jump Feel")]
+    public Transform feetPos;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+    public float jumpSpeed;
+    public float jumpTime;
+
+    public GameObject dustParticles;
+    public GameObject trailEffect;
+    public float startTimeBetweenTrail;
+
+    public Animator camAnim;
+
+    #endregion
+
+    #region Private variables
+
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
     private bool _aButton;
@@ -45,6 +70,15 @@ public class PlayerController : MonoBehaviour
     //_slideTimer control if the player can slide again
     private float _slideTime;
     private float _slideTimer;
+
+    private bool _isDead = false;
+    private float _timeSinceDeath;
+
+    private float _jumpTimeCounter;
+    private bool _isJumping;
+
+    private bool _spawnDust;
+    
     
 
     private Animator _animator;
@@ -56,6 +90,10 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsSliding = Animator.StringToHash("IsSliding");
     private static readonly int Attack1 = Animator.StringToHash("Attack1");
     private static readonly int IsGrabbing = Animator.StringToHash("IsGrabbing");
+    private static readonly int IsDead = Animator.StringToHash("IsDead");
+    private float _timeBetweenTrail;
+
+    #endregion
 
     // Start is called before the first frame update
     private void Start()
@@ -68,6 +106,9 @@ public class PlayerController : MonoBehaviour
         _jumpRate = 0.5f;
         _jumpTimer = 0f;
         
+        // Reset the time since death
+        _timeSinceDeath = 0f;
+        
         //Initialize variables
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _isGrounded = false;
@@ -75,26 +116,58 @@ public class PlayerController : MonoBehaviour
         _slideTime = 100f;
         _animator = gameObject.GetComponent<Animator>();
         _ledgeColliderPosition = transform.position;
+
     }
     
 
     // Update is called once per frame
     private void Update()
     {
-        _leftJoystickHorizontal = Input.GetAxis("LeftJoystickHorizontal");
-        _aButton = Input.GetButton("AButton");
+        _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
+        _aButton = Input.GetButtonDown("AButton");
         _bButton = Input.GetButton("BButton");
         _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
+
+        // _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         
         //Flip the sprite according to horizontal velocity
         FlipSprite();
         SetLedgerColliderPosition();
 
+        var velocity = _rb.velocity;
+        velocity = VerticalMovement(velocity);
+        _rb.velocity = velocity;
+        
         if (Time.time >= _grabTimer)
         {
             LedgeCheck();
         }
+
+        if (_timeSinceDeath >= restartDelay && _isDead)
+        {
+            GameManager.instance.RestartLevel();
+        }
+        if (_isDead)
+        {
+            _timeSinceDeath += Time.deltaTime;
+        }
+
+        if (_isGrounded)
+        {
+            if (_spawnDust)
+            {
+                camAnim.SetTrigger("shake");
+                Instantiate(dustParticles, feetPos.position, Quaternion.identity);
+                _spawnDust = false;
+            }
+        }
+        else
+        {
+            _spawnDust = true;
+        }
+
+        
     }
 
     private void FixedUpdate()
@@ -110,6 +183,21 @@ public class PlayerController : MonoBehaviour
             //Crouch check
             CrouchMovement();
         }
+
+        // If player is holding either right or left there will be instansiated a particle effect
+        // like dust spawning from ground when running
+        if (!(0.1f >= _leftJoystickHorizontal && _leftJoystickHorizontal >= -0.1f))
+        {
+            if (_timeBetweenTrail <= 0)
+            {
+                Instantiate(trailEffect, feetPos.position, Quaternion.identity);
+                _timeBetweenTrail = startTimeBetweenTrail;
+            }
+            else
+            {
+                _timeBetweenTrail -= Time.deltaTime;
+            }
+        }
         
         velocity = HorizontalMovement(velocity);
         
@@ -119,10 +207,12 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(nameof(TriggerOneFrame), Attack1);
         }
 
-        velocity = VerticalMovement(velocity);
+
+
+        _rb.velocity = velocity;
 
         //Setting rigidbody velocity equal to changed velocity
-        _rb.velocity = velocity;
+        // _rb.velocity = velocity;
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
     }
 
@@ -185,12 +275,12 @@ public class PlayerController : MonoBehaviour
     /// <returns>New updated velocity of the player</returns>
     private Vector2 HorizontalMovement(Vector2 velocity)
     {        
+        if (_isDead) return Vector2.zero;
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (_leftJoystickHorizontal != 0f)
         {
             //Move Horizontally
             //Set velocity.x according to controlled input, ignore if player is sliding
-            Debug.Log(_isLedgeGrabbing);
             if(!_isSliding && !_isLedgeGrabbing) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
             if (_isGrounded)
             {
@@ -233,25 +323,62 @@ public class PlayerController : MonoBehaviour
     /// <returns>New update velocity of the player</returns>
     private Vector2 VerticalMovement(Vector2 velocity)
     {
-        
+        // If player is dead he should not move
+        if (_isDead) return Vector2.zero;
+        // ?
         _animator.SetBool(IsFalling, false);
-        //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
-        if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
+        
+        // If Player lets go of jump button he jumping is set to false
+        if (Input.GetButtonUp("AButton"))
         {
-
+            _isJumping = false;
+        }
+        
+        print(Input.GetButtonDown("AButton"));
+        // If player is on ground or ledge, he should begin jumping if jump button is pressed
+        if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && _aButton)
+        {
             //Cooldown of jump to allow for ledge grab
             _jumpTimer = Time.time + _jumpRate;
             
-            //Start jumping
-            velocity.y = jumpSpeed * Time.fixedDeltaTime;
-            _isGrounded = false;
-            _isLedgeGrabbing = false;
+            // Create a particle effect when he jumps
+            Instantiate(dustParticles, feetPos.position, Quaternion.identity);
+            // set jumping to true for holding down jump button
+            _isJumping = true;
+            // initiate the jump constraints
+            _jumpTimeCounter = jumpTime;
+            // Set y velocity to jump speed
+            velocity.y = Vector2.up.y * jumpSpeed;
+            
             //Player is jumping
+            _isLedgeGrabbing = false;
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
             _animator.SetBool(IsGrabbing, false);
         }
-        else if (_isGrounded)
+        // If the player holds down the a button and is still jumping the velocity should increase
+        if (Input.GetButton("AButton") && _isJumping && !(_isLedgeGrabbing))
+        {
+            if (_jumpTimeCounter > 0)
+            {
+                velocity.y = Vector2.up.y * jumpSpeed;
+                _jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                _isJumping = false;
+            }
+        }
+        // //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
+        // if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
+        // {
+        //
+        //     
+        //     //Start jumping
+        //     
+        //
+        // }
+        if (_isGrounded && !_isJumping)
         {
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
@@ -353,6 +480,8 @@ public class PlayerController : MonoBehaviour
     private void LedgeCheck()
     {
         Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(_ledgeColliderPosition, 0.1f, ledgeLayer);
+
+        if (_jumpTimeCounter >= jumpTime - 0.1f) return;
         
         foreach (var ledge in ledgeDetected)
         {
@@ -367,6 +496,15 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_ledgeColliderPosition, 0.1f);
+    }
+
+    public void Detected()
+    {
+        if (_isDead) return;
+        _animator.SetBool(IsDead, true);
+        _isDead = true;
+        _timeSinceDeath = 0f;
+
     }
 
     //TODO Should we limit player movement during attack animation?  maybe
