@@ -103,6 +103,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraMovementController.cs" t="Include" />
+          <e p="Destroyer.cs" t="Include" />
           <e p="Enemy" t="Include">
             <e p="EnemyController.cs" t="Include" />
             <e p="EnemyDetection.cs" t="Include" />
