@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 3111426137589557755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.3}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 8.702297, y: 8.702297, z: 2.1755743}
   m_Children:
   - {fileID: 594773492153710816}
   - {fileID: 185102942}
@@ -132,7 +132,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: b8656a873ba92644bbf96008a0de76b3, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 0
@@ -191,8 +191,14 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
-  jumpSpeed: 5.43
-  jumpTime: 0.6
+  jumpSpeed: 8
+  jumpTime: 0.35
+  dustParticles: {fileID: 4670451041340310089, guid: fbbd1d4e5be200549830d8ad0db4434c,
+    type: 3}
+  trailEffect: {fileID: 3756430314630310423, guid: e90c0107ea29dcb469edb0100d325907,
+    type: 3}
+  startTimeBetweenTrail: 0.1
+  camAnim: {fileID: 0}
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3
@@ -254,7 +260,7 @@ CircleCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.17647205, y: 0}
