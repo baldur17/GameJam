@@ -101,6 +101,7 @@
             </e>
           </e>
         </e>
+        <e p="PauseMenu.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="CameraMovementController.cs" t="Include" />
           <e p="Destroyer.cs" t="Include" />
