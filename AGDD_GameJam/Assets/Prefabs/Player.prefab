@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 3111426137589557757}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &639337153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 639337154}
+  m_Layer: 0
+  m_Name: LedgeGrabber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &639337154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639337153}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.089, y: 0.116, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3111426137589557757}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3111426137589557755
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +94,7 @@ Transform:
   m_Children:
   - {fileID: 594773492153710816}
   - {fileID: 185102942}
+  - {fileID: 639337154}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,7 +163,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3.5
+  m_GravityScale: 5.5
   m_Material: {fileID: 6200000, guid: b8656a873ba92644bbf96008a0de76b3, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 0
@@ -177,9 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3111426137589557756}
-  runSpeed: 200
+  runSpeed: 530
   crouchSpeed: 0
-  slideSpeed: 425
+  slideSpeed: 820
   slideTime: 0.4
   slideRate: 1
   ledgeLayer:
@@ -191,14 +222,16 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
-  jumpSpeed: 8
-  jumpTime: 0.35
+  jumpSpeed: 23
+  jumpTime: 0.15
   dustParticles: {fileID: 4670451041340310089, guid: fbbd1d4e5be200549830d8ad0db4434c,
     type: 3}
   trailEffect: {fileID: 3756430314630310423, guid: e90c0107ea29dcb469edb0100d325907,
     type: 3}
   startTimeBetweenTrail: 0.1
   camAnim: {fileID: 0}
+  ledgeObject: {fileID: 639337153}
+  ledgeRadius: 0.2
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3
