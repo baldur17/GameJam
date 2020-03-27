@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour
 
     public Animator camAnim;
 
+    [Header("Ledge Properties")] 
+    
+    public GameObject ledgeObject;
+    public float ledgeRadius;
+    
     #endregion
 
     #region Private variables
@@ -61,7 +66,6 @@ public class PlayerController : MonoBehaviour
     private bool _isIdle;
     private bool _isFalling;
     private bool _isLedgeGrabbing;
-    private Vector2 _ledgeColliderPosition;
     private float _grabTimer;
     private float _grabRate;
     private float _jumpTimer;
@@ -78,6 +82,8 @@ public class PlayerController : MonoBehaviour
     private bool _isJumping;
 
     private bool _spawnDust;
+
+    private float _initialGravity;
     
     
 
@@ -115,7 +121,9 @@ public class PlayerController : MonoBehaviour
         _isLedgeGrabbing = false;
         _slideTime = 100f;
         _animator = gameObject.GetComponent<Animator>();
-        _ledgeColliderPosition = transform.position;
+        // _ledgeColliderPosition = transform.position;
+
+        _initialGravity = _rb.gravityScale;
 
     }
     
@@ -129,11 +137,11 @@ public class PlayerController : MonoBehaviour
         _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
 
-        // _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+        _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         
         //Flip the sprite according to horizontal velocity
         FlipSprite();
-        SetLedgerColliderPosition();
+        // SetLedgerColliderPosition();
 
         var velocity = _rb.velocity;
         velocity = VerticalMovement(velocity);
@@ -205,6 +213,7 @@ public class PlayerController : MonoBehaviour
         {
             //TODO limit attack rate here or in update function
             StartCoroutine(nameof(TriggerOneFrame), Attack1);
+            // _animator.SetTrigger(Attack1);
         }
 
 
@@ -222,20 +231,20 @@ public class PlayerController : MonoBehaviour
     /// <param name="other"></param>
     private void OnCollisionEnter2D(Collision2D other)
     {
-        List<ContactPoint2D> collisionList = other.contacts.ToList();
-        
-        //Loop through list of all contacts and see if any of them
-        //Have a normal vector within X range (i.e flat to almost flat ground)
-        //If so we know player is grounded
-        
-        foreach (var contact in collisionList)
-        {
-            Vector2 vec = contact.normal;
-;            if (vec.y >= 0.8f)
-            {
-                _isGrounded = true;
-            }
-        }
+//         List<ContactPoint2D> collisionList = other.contacts.ToList();
+//         
+//         //Loop through list of all contacts and see if any of them
+//         //Have a normal vector within X range (i.e flat to almost flat ground)
+//         //If so we know player is grounded
+//         
+//         foreach (var contact in collisionList)
+//         {
+//             Vector2 vec = contact.normal;
+// ;            if (vec.y >= 0.8f)
+//             {
+//                 _isGrounded = true;
+//             }
+//         }
     }
     
     /// <summary>
@@ -424,7 +433,7 @@ public class PlayerController : MonoBehaviour
     private void CrouchMovement()
     {
         _grabTimer = Time.time + _grabRate;
-        _rb.gravityScale = 1;
+        _rb.gravityScale = _initialGravity;
         _animator.SetBool(IsGrabbing, false);
         _isLedgeGrabbing = false;
         _animator.SetBool(IsCrouching, true);
@@ -467,9 +476,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SetLedgerColliderPosition()
     {
-        var transform1 = transform;
-        var position = transform1.position;
-        _ledgeColliderPosition = transform1.localScale.x < 0 ? new Vector2(-0.29f + position.x, 0.5f + position.y) : new Vector2(0.29f + position.x, 0.5f + position.y);
+        // var transform1 = transform;
+        // var position = transform1.position;
+        // _ledgeColliderPosition = transform1.localScale.x < 0 ? new Vector2(-0.29f + position.x, 0.5f + position.y) : new Vector2(0.29f + position.x, 0.5f + position.y);
 
     }
 
@@ -479,7 +488,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void LedgeCheck()
     {
-        Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(_ledgeColliderPosition, 0.1f, ledgeLayer);
+        Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(ledgeObject.transform.position, ledgeRadius, ledgeLayer);
 
         if (_jumpTimeCounter >= jumpTime - 0.1f) return;
         
@@ -495,7 +504,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(_ledgeColliderPosition, 0.1f);
+        Gizmos.DrawWireSphere(ledgeObject.transform.position, ledgeRadius);
     }
 
     public void Detected()
