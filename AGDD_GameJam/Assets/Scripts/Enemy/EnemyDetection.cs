@@ -3,6 +3,7 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -12,18 +13,44 @@ namespace Enemy
     public class EnemyDetection : MonoBehaviour
     {
 
+        #region Public Variables
+        
         public float lookDistance;
         public float lookAngle;
-
         [FormerlySerializedAs("ExclamationGameObject")] public GameObject exclamationGameObject;
 
+        public Image emptyExclamation;
+        public Image filledExclamation;
+
+        // Time needed for enemy to fully detect player
+        public float detectionTime;
+        
+        #endregion
+        
+        // Region where all the private variables are stored
+        #region Private Variables
+
         private PolygonCollider2D _collider;
+        private float _timeSinceDetected;
+        private bool _playerDetected;
+
+        private Patrol _patrol;
+        private float _originalSpeed;
+
+        private PlayerController _playerController;
+        
+        #endregion
         
         // Start is called before the first frame update
         void Start()
         {
             _collider = GetComponent<PolygonCollider2D>();
             _collider.points = new Vector2[4];
+
+            _patrol = gameObject.GetComponentInParent<Patrol>();
+            _originalSpeed = _patrol.speed;
+
+            _playerController = GameManager.instance.player.GetComponent<PlayerController>();
         }
 
         // Update is called once per frame
@@ -35,8 +62,34 @@ namespace Enemy
             points[1] = new Vector2(lookDistance, lookAngle/2);
             points[2] = new Vector2(lookDistance, -(lookAngle / 2));
             _collider.points = points;
+
+            UpdateDetection();
         }
-        
+
+        private void UpdateDetection()
+        {
+            if (_playerDetected)
+            {
+                if (_timeSinceDetected <= 0)
+                {
+                    filledExclamation.color = Color.red;
+                    _playerController.Detected();
+                }
+                else
+                {
+                    _timeSinceDetected -= Time.deltaTime;
+                    setExclamationPercentage(_timeSinceDetected);
+                }
+            }
+        }
+
+        private void setExclamationPercentage(float timeSinceDetected)
+        {
+            float currentFillPercentage = Mathf.Lerp(1, 0, timeSinceDetected / detectionTime);
+
+            filledExclamation.fillAmount = currentFillPercentage;
+        }
+
         void OnDrawGizmosSelected()
         {
             // Draw a line from enemy to where top and bottom points of cone vision are.
@@ -67,12 +120,37 @@ namespace Enemy
                     // If the raycast collides with player
                     if (hit.collider.name == "Player")
                     {
-                        player.Detected();
-                        exclamationGameObject.GetComponent<SpriteRenderer>().enabled = true;
+                        if (!_playerDetected)
+                        {
+                            
+                            _patrol.speed = 0;
+                            _playerDetected = true;
+                            _timeSinceDetected = detectionTime;
+                            emptyExclamation.gameObject.SetActive(true);
+                            filledExclamation.gameObject.SetActive(true);
+                            setExclamationPercentage(_timeSinceDetected);
+                        }
+                        
+                        // player.Detected();
+                        // exclamationGameObject.GetComponent<SpriteRenderer>().enabled = true;
 
                     }
                 }
             }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            PlayerController player = other.GetComponent<PlayerController>();
+
+            if (!player) return;
+            
+            print("PLAYER LEFT TRIGGER");
+            _playerDetected = false;
+            emptyExclamation.gameObject.SetActive(false);
+            filledExclamation.gameObject.SetActive(false);
+
+            _patrol.speed = _originalSpeed;
         }
     }
 }

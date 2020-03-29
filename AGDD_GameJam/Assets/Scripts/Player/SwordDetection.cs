@@ -11,7 +11,6 @@ public class SwordDetection : MonoBehaviour
     {
         if (other.CompareTag($"Enemy"))
         {
-            Debug.Log($"Enemy");
             IEnemy enemy = other.gameObject.GetComponentInParent<IEnemy>();
             enemy?.Hit(1);
             enemy?.PlayAnimation();

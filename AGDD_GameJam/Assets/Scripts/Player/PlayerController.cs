@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Timeline;
 using Debug = UnityEngine.Debug;
 using Quaternion = UnityEngine.Quaternion;
@@ -134,7 +135,7 @@ public class PlayerController : MonoBehaviour
         _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
         _aButton = Input.GetButtonDown("AButton");
         _bButton = Input.GetButton("BButton");
-        _xButton = Input.GetButton("XButton");
+        _xButton = Input.GetButtonDown("XButton");
         _yButton = Input.GetButton("YButton");
 
         _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
@@ -196,7 +197,7 @@ public class PlayerController : MonoBehaviour
         // like dust spawning from ground when running
         if (!(0.1f >= _leftJoystickHorizontal && _leftJoystickHorizontal >= -0.1f))
         {
-            if (_timeBetweenTrail <= 0)
+            if (_timeBetweenTrail <= 0 && _isGrounded)
             {
                 Instantiate(trailEffect, feetPos.position, Quaternion.identity);
                 _timeBetweenTrail = startTimeBetweenTrail;
@@ -212,8 +213,8 @@ public class PlayerController : MonoBehaviour
         if (_xButton)
         {
             //TODO limit attack rate here or in update function
-            StartCoroutine(nameof(TriggerOneFrame), Attack1);
-            // _animator.SetTrigger(Attack1);
+            // StartCoroutine(nameof(TriggerOneFrame), Attack1);
+            _animator.SetTrigger(Attack1);
         }
 
 
@@ -343,7 +344,6 @@ public class PlayerController : MonoBehaviour
             _isJumping = false;
         }
         
-        print(Input.GetButtonDown("AButton"));
         // If player is on ground or ledge, he should begin jumping if jump button is pressed
         if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && _aButton)
         {
@@ -491,14 +491,18 @@ public class PlayerController : MonoBehaviour
         Collider2D[] ledgeDetected = Physics2D.OverlapCircleAll(ledgeObject.transform.position, ledgeRadius, ledgeLayer);
 
         if (_jumpTimeCounter >= jumpTime - 0.1f) return;
-        
-        foreach (var ledge in ledgeDetected)
+
+        if (ledgeDetected.Length > 0)
         {
             //Player is grabbing a ledge
             _animator.SetBool(IsGrabbing, true);
             _isLedgeGrabbing = true;
             _rb.gravityScale = 0;
             _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+        }
+        else
+        {
+            _rb.gravityScale = _initialGravity;
         }
     }
 
