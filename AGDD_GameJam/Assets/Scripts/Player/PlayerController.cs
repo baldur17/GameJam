@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float slideSpeed;
     public float slideTime;
     public float slideRate;
+    public float timeBetweenSlides;
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
@@ -347,6 +348,8 @@ public class PlayerController : MonoBehaviour
         // If player is on ground or ledge, he should begin jumping if jump button is pressed
         if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && _aButton)
         {
+            _rb.gravityScale = _initialGravity;
+            
             _rb.velocity = new Vector2(_rb.velocity.x, 0);
             
             //Cooldown of jump to allow for ledge grab
@@ -359,10 +362,10 @@ public class PlayerController : MonoBehaviour
             // initiate the jump constraints
             _jumpTimeCounter = jumpTime;
             // Set y velocity to jump speed
-            Vector2 jumpForceToAdd = new Vector2(0, jumpSpeed);
-            
-            _rb.AddForce(jumpForceToAdd, ForceMode2D.Impulse);
-            // velocity.y = Vector2.up.y * jumpSpeed;
+            // Vector2 jumpForceToAdd = new Vector2(0, jumpSpeed);
+            //
+            // _rb.AddForce(jumpForceToAdd, ForceMode2D.Impulse);
+            velocity.y = Vector2.up.y * jumpSpeed;
             
             //Player is jumping
             _isLedgeGrabbing = false;

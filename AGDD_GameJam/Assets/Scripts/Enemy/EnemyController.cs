@@ -9,7 +9,7 @@ namespace Enemy
         // Variable to set the death animation
         private static readonly int IsDead = Animator.StringToHash("IsDead");
 
-        private ParticleSystem _slashEffect;
+        // private ParticleSystem _slashEffect;
 
         public bool isDead;
 
@@ -19,7 +19,7 @@ namespace Enemy
         {
             isDead = false;
             _animator = gameObject.GetComponent<Animator>();
-            _slashEffect = GetComponentInChildren<ParticleSystem>();
+            // _slashEffect = GetComponentInChildren<ParticleSystem>();
         }
 
         // Update is called once per frame
@@ -50,7 +50,8 @@ namespace Enemy
 
         public void PlayAnimation()
         {
-            _slashEffect.Play();
+            throw new System.NotImplementedException();
+        //     _slashEffect.Play();
         }
     }
 }
