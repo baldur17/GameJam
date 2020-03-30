@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6161972526509179371}
   m_Layer: 9
   m_Name: DetectionRange
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,11 +72,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6b941e0b75e2b47b92a850208d1d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookDistance: 0.86
+  lookDistance: 1.1
   lookAngle: 0.45
   exclamationGameObject: {fileID: 2936981693463018931}
-  emptyExclamation: {fileID: 0}
-  filledExclamation: {fileID: 0}
+  emptyExclamation: {fileID: 8865181838163738993}
+  filledExclamation: {fileID: 5169860043909030111}
   detectionTime: 1.5
 --- !u!1 &1757021506712614531
 GameObject:
@@ -271,12 +271,12 @@ GameObject:
   - component: {fileID: 3857172964263633513}
   - component: {fileID: 5169860043909030111}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FilledExclamation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1820963506963855808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -417,12 +417,12 @@ GameObject:
   - component: {fileID: 6226299346563503108}
   - component: {fileID: 8865181838163738993}
   m_Layer: 5
-  m_Name: Image
+  m_Name: EmptyExclamation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1284509432874654715
 RectTransform:
   m_ObjectHideFlags: 0
