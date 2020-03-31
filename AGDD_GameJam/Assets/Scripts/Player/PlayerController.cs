@@ -54,7 +54,10 @@ public class PlayerController : MonoBehaviour
 
     public float holdVerticalTimeUp;
     public float holdVerticalTimeDown;
-    
+
+    [Header("Audio")] 
+    public AudioSource heartbeat;
+        
     #endregion
 
     #region Private variables
@@ -188,8 +191,21 @@ public class PlayerController : MonoBehaviour
         {
             _spawnDust = true;
         }
-
         
+        if (_animator.GetBool(IsCrouching) && _isGrounded)
+        {
+            if (!heartbeat.isPlaying)
+            {
+                heartbeat.Play();
+            }
+        }
+        else
+        {
+            if (heartbeat.isPlaying)
+            {
+                heartbeat.Stop();
+            }
+        }
     }
 
     private void VerticalJoystickLedge()
@@ -335,6 +351,8 @@ public class PlayerController : MonoBehaviour
         // ReSharper disable once CompareOfFloatsByEqualityOperator
         if (_leftJoystickHorizontal != 0f)
         {
+            // Disable crouch if player moves left/right
+            _animator.SetBool(IsCrouching, false);
             //Move Horizontally
             //Set velocity.x according to controlled input, ignore if player is sliding
             if(!_isSliding && !_isLedgeGrabbing) velocity.x = runSpeed * Time.fixedDeltaTime * _leftJoystickHorizontal;
@@ -342,7 +360,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Play run animation
                 //Player is grounded and moving left/right, so disable crouch and crouch animation
-                _animator.SetBool(IsCrouching, false);
+//                _animator.SetBool(IsCrouching, false);
                 //Player wants to slide, is not currently sliding and he can slide according to slideRate
                 if (_yButton && !_isSliding && Time.time >= _slideTimer)
                 {
@@ -417,6 +435,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool(IsJumping, true);
             _animator.SetBool(IsFalling, false);
             _animator.SetBool(IsGrabbing, false);
+            _animator.SetBool(IsCrouching, false);
         }
         // If the player holds down the a button and is still jumping the velocity should increase
         if (Input.GetButton("AButton") && _isJumping && !(_isLedgeGrabbing))
