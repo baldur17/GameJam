@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float slideSpeed;
     public float slideTime;
     public float slideRate;
+    public float timeBetweenSlides;
 
     [Header("Other")] 
     public LayerMask ledgeLayer;
@@ -46,10 +47,14 @@ public class PlayerController : MonoBehaviour
 
     //public Animator camAnim;
 
+
     [Header("Ledge Properties")] 
     
     public GameObject ledgeObject;
     public float ledgeRadius;
+
+    public float holdVerticalTimeUp;
+    public float holdVerticalTimeDown;
     
     #endregion
 
@@ -57,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
+    private float _leftJoystickVertical;
     private bool _aButton;
     private bool _bButton;
     private bool _xButton;
@@ -103,6 +109,13 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsDead = Animator.StringToHash("IsDead");
     private float _timeBetweenTrail;
 
+    private float _timeSinceVerticalUp = 0.0f;
+    private bool _verticalUpActive = false;
+    private float _timeSinceVerticalDown = 0.0f;
+    private bool _verticalDownActive = false;
+
+    private float _timeSinceLedgeGrab = 0.1f;
+    
     #endregion
 
     // Start is called before the first frame update
@@ -133,11 +146,11 @@ public class PlayerController : MonoBehaviour
         _initialGravity = _rb.gravityScale;
 
     }
-    
 
     // Update is called once per frame
     private void Update()
     {
+        _leftJoystickVertical = Input.GetAxis("LeftJoystickVertical");
         _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
         _aButton = Input.GetButtonDown("AButton");
         _bButton = Input.GetButton("BButton");
@@ -150,14 +163,25 @@ public class PlayerController : MonoBehaviour
         FlipSprite();
         // SetLedgerColliderPosition();
 
-        var velocity = _rb.velocity;
-        velocity = VerticalMovement(velocity);
-        _rb.velocity = velocity;
-        
+        VerticalJoystickLedge();
+
         if (Time.time >= _grabTimer)
         {
             LedgeCheck();
         }
+        
+        if (_timeSinceLedgeGrab >= 0.1f)
+        {
+            var velocity = _rb.velocity;
+            velocity = VerticalMovement(velocity);
+            _rb.velocity = velocity;
+        }
+        else
+        {
+            _timeSinceLedgeGrab += Time.deltaTime;
+        }
+        
+        
 
         if (_timeSinceDeath >= restartDelay && _isDead)
         {
@@ -173,6 +197,7 @@ public class PlayerController : MonoBehaviour
             if (_spawnDust)
             {
                 //camAnim.SetTrigger("shake");
+
                 Instantiate(dustParticles, feetPos.position, Quaternion.identity);
                 _spawnDust = false;
             }
@@ -181,8 +206,40 @@ public class PlayerController : MonoBehaviour
         {
             _spawnDust = true;
         }
-
         
+    }
+
+    private void VerticalJoystickLedge()
+    {
+        if (_isLedgeGrabbing && _leftJoystickVertical <= -.4f)
+        {
+            if (_timeSinceVerticalUp >= holdVerticalTimeUp)
+            {
+                _aButton = true;
+                _timeSinceVerticalUp = 0.0f;
+            }
+
+            _timeSinceVerticalUp += Time.deltaTime;
+        }
+        else
+        {
+            _timeSinceVerticalUp = 0.0f;
+        }
+
+        if (_isLedgeGrabbing && _leftJoystickVertical >= .4f)
+        {
+            if (_timeSinceVerticalDown >= holdVerticalTimeDown)
+            {
+                _bButton = true;
+                _timeSinceVerticalDown = 0.0f;
+            }
+
+            _timeSinceVerticalDown += Time.deltaTime;
+        }
+        else
+        {
+            _timeSinceVerticalDown = 0.0f;
+        }
     }
 
     private void FixedUpdate()
@@ -213,8 +270,7 @@ public class PlayerController : MonoBehaviour
                 _timeBetweenTrail -= Time.deltaTime;
             }
         }
-        
-        velocity = HorizontalMovement(velocity);
+        if (!_isLedgeGrabbing) velocity = HorizontalMovement(velocity);
         
         if (_xButton && Time.time >= _attackTimer)
         {
@@ -230,6 +286,7 @@ public class PlayerController : MonoBehaviour
         //Setting rigidbody velocity equal to changed velocity
         // _rb.velocity = velocity;
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
+        
     }
 
     /// <summary>
@@ -353,6 +410,8 @@ public class PlayerController : MonoBehaviour
         // If player is on ground or ledge, he should begin jumping if jump button is pressed
         if (((_isGrounded || _isLedgeGrabbing) && Time.time >= _jumpTimer) && _aButton)
         {
+            _rb.gravityScale = _initialGravity;
+            
             _rb.velocity = new Vector2(_rb.velocity.x, 0);
             
             //Cooldown of jump to allow for ledge grab
@@ -365,10 +424,10 @@ public class PlayerController : MonoBehaviour
             // initiate the jump constraints
             _jumpTimeCounter = jumpTime;
             // Set y velocity to jump speed
-            Vector2 jumpForceToAdd = new Vector2(0, jumpSpeed);
-            
-            _rb.AddForce(jumpForceToAdd, ForceMode2D.Impulse);
-            // velocity.y = Vector2.up.y * jumpSpeed;
+            // Vector2 jumpForceToAdd = new Vector2(0, jumpSpeed);
+            //
+            // _rb.AddForce(jumpForceToAdd, ForceMode2D.Impulse);
+            velocity.y = Vector2.up.y * jumpSpeed;
             
             //Player is jumping
             _isLedgeGrabbing = false;
@@ -382,13 +441,13 @@ public class PlayerController : MonoBehaviour
             if (_jumpTimeCounter > 0)
             {
                 velocity.y = Vector2.up.y * jumpSpeed;
-                _jumpTimeCounter -= Time.deltaTime;
             }
             else
             {
                 _isJumping = false;
             }
         }
+        _jumpTimeCounter -= Time.deltaTime;
         // //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
         // if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
         // {
@@ -398,7 +457,7 @@ public class PlayerController : MonoBehaviour
         //     
         //
         // }
-        if (_isGrounded && !_isJumping)
+        if (_isGrounded && !_isJumping && !_isLedgeGrabbing)
         {
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
@@ -505,14 +564,18 @@ public class PlayerController : MonoBehaviour
 
         if (ledgeDetected.Length > 0)
         {
+            if (!_isLedgeGrabbing) _timeSinceLedgeGrab = 0f;
             //Player is grabbing a ledge
             _animator.SetBool(IsGrabbing, true);
             _isLedgeGrabbing = true;
             _rb.gravityScale = 0;
-            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+            _rb.velocity = new Vector2(0f, 0f);
         }
         else
         {
+            print("else in ledge grab");
+            _animator.SetBool(IsGrabbing, false);
+            _isLedgeGrabbing = false;
             _rb.gravityScale = _initialGravity;
         }
     }

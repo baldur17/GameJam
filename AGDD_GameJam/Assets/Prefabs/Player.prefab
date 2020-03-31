@@ -212,7 +212,8 @@ MonoBehaviour:
   crouchSpeed: 0
   slideSpeed: 820
   slideTime: 0.4
-  slideRate: 1
+  slideRate: 0.4
+  timeBetweenSlides: 0
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 256

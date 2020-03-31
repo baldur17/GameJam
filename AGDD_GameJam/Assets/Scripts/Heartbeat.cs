@@ -9,6 +9,8 @@ public class Heartbeat : MonoBehaviour
     public float timeBetweenPulse; //Pulse is 1 'heartbeat'
     public Light2D myLight;
 
+    public GameObject heartbeatEffect;
+    
     private bool _coroutineRunning;
     public float maxIntensity;
     
@@ -51,9 +53,11 @@ public class Heartbeat : MonoBehaviour
     {
         //This should play 2 heartbeats and wait be
         yield return StartCoroutine( HeartBeatOne() );
+        // Instantiate(heartbeatEffect, transform.position, Quaternion.identity);
         //Wait between the two beats slightly
         yield return new WaitForSeconds(0.1f);
         yield return StartCoroutine( HeartBeatTwo() );
+        // Instantiate(heartbeatEffect, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.4f);
         _coroutineRunning = false;
         myLight.intensity -= 0;
