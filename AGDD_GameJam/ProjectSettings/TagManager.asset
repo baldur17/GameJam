@@ -57,3 +57,6 @@ TagManager:
   - name: Player
     uniqueID: 4001377937
     locked: 0
+  - name: heartbeat
+    uniqueID: 1523111047
+    locked: 0

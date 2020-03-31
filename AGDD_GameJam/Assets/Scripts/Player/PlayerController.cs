@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
     
     public GameObject ledgeObject;
     public float ledgeRadius;
+
+    public float holdVerticalTimeUp;
+    public float holdVerticalTimeDown;
     
     #endregion
 
@@ -58,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
     private float _leftJoystickHorizontal;
+    private float _leftJoystickVertical;
     private bool _aButton;
     private bool _bButton;
     private bool _xButton;
@@ -101,6 +105,11 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsDead = Animator.StringToHash("IsDead");
     private float _timeBetweenTrail;
 
+    private float _timeSinceVerticalUp = 0.0f;
+    private bool _verticalUpActive = false;
+    private float _timeSinceVerticalDown = 0.0f;
+    private bool _verticalDownActive = false;
+
     #endregion
 
     // Start is called before the first frame update
@@ -128,11 +137,11 @@ public class PlayerController : MonoBehaviour
         _initialGravity = _rb.gravityScale;
 
     }
-    
 
     // Update is called once per frame
     private void Update()
     {
+        _leftJoystickVertical = Input.GetAxis("LeftJoystickVertical");
         _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
         _aButton = Input.GetButtonDown("AButton");
         _bButton = Input.GetButton("BButton");
@@ -144,6 +153,9 @@ public class PlayerController : MonoBehaviour
         //Flip the sprite according to horizontal velocity
         FlipSprite();
         // SetLedgerColliderPosition();
+
+        VerticalJoystickLedge();
+
 
         var velocity = _rb.velocity;
         velocity = VerticalMovement(velocity);
@@ -178,6 +190,39 @@ public class PlayerController : MonoBehaviour
         }
 
         
+    }
+
+    private void VerticalJoystickLedge()
+    {
+        if (_isLedgeGrabbing && _leftJoystickVertical <= -.4f)
+        {
+            if (_timeSinceVerticalUp >= holdVerticalTimeUp)
+            {
+                _aButton = true;
+                _timeSinceVerticalUp = 0.0f;
+            }
+
+            _timeSinceVerticalUp += Time.deltaTime;
+        }
+        else
+        {
+            _timeSinceVerticalUp = 0.0f;
+        }
+
+        if (_isLedgeGrabbing && _leftJoystickVertical >= .4f)
+        {
+            if (_timeSinceVerticalDown >= holdVerticalTimeDown)
+            {
+                _bButton = true;
+                _timeSinceVerticalDown = 0.0f;
+            }
+
+            _timeSinceVerticalDown += Time.deltaTime;
+        }
+        else
+        {
+            _timeSinceVerticalDown = 0.0f;
+        }
     }
 
     private void FixedUpdate()
