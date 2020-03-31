@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public GameObject trailEffect;
     public float startTimeBetweenTrail;
 
-    public Animator camAnim;
+    //public Animator camAnim;
 
     [Header("Ledge Properties")] 
     
@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
     //_slideTimer control if the player can slide again
     private float _slideTime;
     private float _slideTimer;
+
+    private float _attackTimer;
+    private float _attackRate;
 
     private bool _isDead = false;
     private float _timeSinceDeath;
@@ -112,7 +115,10 @@ public class PlayerController : MonoBehaviour
         //Small cooldown on jump to allow for ledge grab to work properly, not meant as an actual cooldown
         _jumpRate = 0.5f;
         _jumpTimer = 0f;
-        
+        //Small cooldown on attack
+        _attackRate = 0.3f;
+        _attackTimer = 0f;
+
         // Reset the time since death
         _timeSinceDeath = 0f;
         
@@ -135,7 +141,7 @@ public class PlayerController : MonoBehaviour
         _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
         _aButton = Input.GetButtonDown("AButton");
         _bButton = Input.GetButton("BButton");
-        _xButton = Input.GetButtonDown("XButton");
+        _xButton = Input.GetButton("XButton");
         _yButton = Input.GetButton("YButton");
 
         _isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
@@ -166,7 +172,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_spawnDust)
             {
-                camAnim.SetTrigger("shake");
+                //camAnim.SetTrigger("shake");
                 Instantiate(dustParticles, feetPos.position, Quaternion.identity);
                 _spawnDust = false;
             }
@@ -210,11 +216,11 @@ public class PlayerController : MonoBehaviour
         
         velocity = HorizontalMovement(velocity);
         
-        if (_xButton)
+        if (_xButton && Time.time >= _attackTimer)
         {
-            //TODO limit attack rate here or in update function
-            // StartCoroutine(nameof(TriggerOneFrame), Attack1);
-            _animator.SetTrigger(Attack1);
+            _attackTimer = Time.time + _attackRate;
+            StartCoroutine(nameof(TriggerOneFrame), Attack1);
+            // _animator.SetTrigger(Attack1);
         }
 
 

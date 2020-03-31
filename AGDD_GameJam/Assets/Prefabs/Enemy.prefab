@@ -75,8 +75,8 @@ MonoBehaviour:
   lookDistance: 0.86
   lookAngle: 0.45
   exclamationGameObject: {fileID: 2936981693463018931}
-  emptyExclamation: {fileID: 0}
-  filledExclamation: {fileID: 0}
+  emptyExclamation: {fileID: 8865181838163738993}
+  filledExclamation: {fileID: 5169860043909030111}
   detectionTime: 1.5
 --- !u!1 &1757021506712614531
 GameObject:
