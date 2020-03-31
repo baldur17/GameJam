@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
     public GameObject trailEffect;
     public float startTimeBetweenTrail;
 
-    public Animator camAnim;
 
     [Header("Ledge Properties")] 
     
@@ -110,6 +109,8 @@ public class PlayerController : MonoBehaviour
     private float _timeSinceVerticalDown = 0.0f;
     private bool _verticalDownActive = false;
 
+    private float _timeSinceLedgeGrab = 0.1f;
+    
     #endregion
 
     // Start is called before the first frame update
@@ -156,15 +157,23 @@ public class PlayerController : MonoBehaviour
 
         VerticalJoystickLedge();
 
-
-        var velocity = _rb.velocity;
-        velocity = VerticalMovement(velocity);
-        _rb.velocity = velocity;
-        
         if (Time.time >= _grabTimer)
         {
             LedgeCheck();
         }
+        
+        if (_timeSinceLedgeGrab >= 0.1f)
+        {
+            var velocity = _rb.velocity;
+            velocity = VerticalMovement(velocity);
+            _rb.velocity = velocity;
+        }
+        else
+        {
+            _timeSinceLedgeGrab += Time.deltaTime;
+        }
+        
+        
 
         if (_timeSinceDeath >= restartDelay && _isDead)
         {
@@ -179,7 +188,6 @@ public class PlayerController : MonoBehaviour
         {
             if (_spawnDust)
             {
-                camAnim.SetTrigger("shake");
                 Instantiate(dustParticles, feetPos.position, Quaternion.identity);
                 _spawnDust = false;
             }
@@ -188,7 +196,6 @@ public class PlayerController : MonoBehaviour
         {
             _spawnDust = true;
         }
-
         
     }
 
@@ -253,8 +260,7 @@ public class PlayerController : MonoBehaviour
                 _timeBetweenTrail -= Time.deltaTime;
             }
         }
-        
-        velocity = HorizontalMovement(velocity);
+        if (!_isLedgeGrabbing) velocity = HorizontalMovement(velocity);
         
         if (_xButton)
         {
@@ -270,6 +276,7 @@ public class PlayerController : MonoBehaviour
         //Setting rigidbody velocity equal to changed velocity
         // _rb.velocity = velocity;
         _animator.SetFloat(Speed, Mathf.Abs(velocity.x));
+        
     }
 
     /// <summary>
@@ -440,7 +447,7 @@ public class PlayerController : MonoBehaviour
         //     
         //
         // }
-        if (_isGrounded && !_isJumping)
+        if (_isGrounded && !_isJumping && !_isLedgeGrabbing)
         {
             _animator.SetBool(IsJumping, false);
             _animator.SetBool(IsFalling, false);
@@ -547,14 +554,18 @@ public class PlayerController : MonoBehaviour
 
         if (ledgeDetected.Length > 0)
         {
+            if (!_isLedgeGrabbing) _timeSinceLedgeGrab = 0f;
             //Player is grabbing a ledge
             _animator.SetBool(IsGrabbing, true);
             _isLedgeGrabbing = true;
             _rb.gravityScale = 0;
-            _rb.velocity = new Vector2(_rb.velocity.x, 0f);
+            _rb.velocity = new Vector2(0f, 0f);
         }
         else
         {
+            print("else in ledge grab");
+            _animator.SetBool(IsGrabbing, false);
+            _isLedgeGrabbing = false;
             _rb.gravityScale = _initialGravity;
         }
     }
