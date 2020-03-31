@@ -10,12 +10,6 @@ public class PauseMenu : MonoBehaviour
 
     [FormerlySerializedAs("GameMenuUi")] public GameObject gameMenuUi;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -30,6 +24,13 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
 
+            GameIsPaused = !GameIsPaused;
+        }
+
+        if (Input.GetButtonDown("BButton") && GameIsPaused)
+        {
+            Resume();
+            
             GameIsPaused = !GameIsPaused;
         }
     }

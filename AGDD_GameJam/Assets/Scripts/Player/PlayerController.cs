@@ -431,13 +431,13 @@ public class PlayerController : MonoBehaviour
             if (_jumpTimeCounter > 0)
             {
                 velocity.y = Vector2.up.y * jumpSpeed;
-                _jumpTimeCounter -= Time.deltaTime;
             }
             else
             {
                 _isJumping = false;
             }
         }
+        _jumpTimeCounter -= Time.deltaTime;
         // //If A is pressed and player is either grounded and is allowed to jump according to timer or the gravity is less than 0.1 (a.k.a hanging)
         // if (_aButton && (_isGrounded && Time.time >= _jumpTimer || Math.Abs(_rb.gravityScale) < 0.1f))
         // {
