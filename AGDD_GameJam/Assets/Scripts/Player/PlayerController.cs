@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")] 
     public AudioSource heartbeat;
-        
+    public AudioSource attackWoosh;
+    
     #endregion
 
     #region Private variables
@@ -277,8 +278,10 @@ public class PlayerController : MonoBehaviour
             //TODO limit attack rate here or in update function
             // StartCoroutine(nameof(TriggerOneFrame), Attack1);
             _animator.SetTrigger(Attack1);
+            
+//            attackWoosh.Play();
         }
-
+        
 
 
         _rb.velocity = velocity;
@@ -590,6 +593,11 @@ public class PlayerController : MonoBehaviour
         _isDead = true;
         _timeSinceDeath = 0f;
 
+    }
+
+    public bool GetCrouch()
+    {
+        return _animator.GetBool(IsCrouching);
     }
 
     //TODO Should we limit player movement during attack animation?  maybe
