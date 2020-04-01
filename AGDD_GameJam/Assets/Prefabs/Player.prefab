@@ -225,14 +225,15 @@ MonoBehaviour:
     m_Bits: 1024
   jumpSpeed: 23
   jumpTime: 0.15
-  dustParticles: {fileID: 4670451041340310089, guid: fbbd1d4e5be200549830d8ad0db4434c,
+  dustParticles: {fileID: 3229881321240864837, guid: fbbd1d4e5be200549830d8ad0db4434c,
     type: 3}
   trailEffect: {fileID: 3756430314630310423, guid: e90c0107ea29dcb469edb0100d325907,
     type: 3}
   startTimeBetweenTrail: 0.1
-  camAnim: {fileID: 0}
   ledgeObject: {fileID: 639337153}
   ledgeRadius: 0.2
+  holdVerticalTimeUp: 0
+  holdVerticalTimeDown: 0
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3
@@ -312,3 +313,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01236185f3c34f4da26959fdf0b2b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEffect: {fileID: 3927709116832164517, guid: f4a8d8f2a4a0f504bb16df6da5f6cd58,
+    type: 3}
