@@ -110,6 +110,8 @@ public class PlayerController : MonoBehaviour
     private bool _verticalDownActive = false;
 
     private float _timeSinceLedgeGrab = 0.1f;
+    private float _timeSincePause = 0.05f;
+    
     
     #endregion
 
@@ -142,6 +144,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+
+        
+
+        
+        
+        if (Time.timeScale == 1f)
+        {
+            _timeSincePause += Time.deltaTime;
+        }
+        else
+        {
+            _timeSincePause = 0f;
+        }
+
+        if (_timeSincePause <= 0.05f)
+        {
+            return;
+        }
+
         _leftJoystickVertical = Input.GetAxis("LeftJoystickVertical");
         _leftJoystickHorizontal = Input.GetAxisRaw("LeftJoystickHorizontal");
         _aButton = Input.GetButtonDown("AButton");
@@ -234,6 +255,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_timeSincePause <= 0.05f)
+        {
+            return;
+        }
+        
         _slideTime += Time.fixedDeltaTime;
         
         //Copying rigidbody velocity to a variable
