@@ -6,6 +6,8 @@ namespace Enemy
     {
         // Animator to set animation variables
         private Animator _animator;
+        public GameObject trailObject;
+        
         // Variable to set the death animation
         private static readonly int IsDead = Animator.StringToHash("IsDead");
 
@@ -19,6 +21,7 @@ namespace Enemy
         {
             isDead = false;
             _animator = gameObject.GetComponent<Animator>();
+            
             // _slashEffect = GetComponentInChildren<ParticleSystem>();
         }
 
@@ -36,6 +39,8 @@ namespace Enemy
             isDead = true;
             // Set player as dead
             _animator.SetBool(IsDead, true);
+            // After enemy dies, disable their trail
+            trailObject.SetActive(false);
         }
 
         public void Move()
