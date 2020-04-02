@@ -57,8 +57,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")] 
     public AudioSource heartbeat;
-    public AudioSource attackWoosh;
-    
+    public AudioSource deathSound;
+
     #endregion
 
     #region Private variables
@@ -592,7 +592,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(IsDead, true);
         _isDead = true;
         _timeSinceDeath = 0f;
-
+        if (!deathSound.isPlaying) deathSound.Play();
     }
 
     public bool GetCrouch()

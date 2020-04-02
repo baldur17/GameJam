@@ -4,6 +4,7 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour, IEnemy
     {
+        public AudioSource deathSound;
         // Animator to set animation variables
         private Animator _animator;
         // Variable to set the death animation
@@ -36,6 +37,7 @@ namespace Enemy
             isDead = true;
             // Set player as dead
             _animator.SetBool(IsDead, true);
+            if(!deathSound.isPlaying) deathSound.Play();
         }
 
         public void Move()

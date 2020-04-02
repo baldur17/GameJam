@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SwordDetection : MonoBehaviour
 {
-
+    public AudioSource hitSound;
     public GameObject bloodEffect;
     
     private void OnTriggerExit2D(Collider2D other)
@@ -17,6 +17,7 @@ public class SwordDetection : MonoBehaviour
             enemy?.Hit(1);
             if (enemy != null)
             {
+                if(!hitSound.isPlaying) hitSound.Play();
                 Instantiate(bloodEffect, other.transform.position, Quaternion.identity);
             }
         }
