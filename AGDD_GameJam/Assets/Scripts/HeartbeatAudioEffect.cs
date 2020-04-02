@@ -9,6 +9,7 @@ using UnityEngine;
 public class HeartbeatAudioEffect : MonoBehaviour
 {
     public GameObject player;
+    public AudioLowPassFilter filter;
     private List<float> _originalVolumes;
     private List<AudioSource> _sources;
     private PlayerController _playerController;
@@ -20,6 +21,7 @@ public class HeartbeatAudioEffect : MonoBehaviour
         _sources = FindObjectsOfType<AudioSource>().ToList();
         _originalVolumes = new List<float>();
         foreach (var s in _sources) _originalVolumes.Add(s.volume);
+        filter.enabled = false;
         _lastState = false;
     }
 
@@ -40,14 +42,8 @@ public class HeartbeatAudioEffect : MonoBehaviour
         foreach (var s in _sources)
         {
             if (s.clip.name == "heartbeat") continue;
-            if (crouch)
-            {
-                s.volume *= 0.2f;
-            }
-            else
-            {
-                s.volume = _originalVolumes[_sources.IndexOf(s)];
-            }
+            filter.enabled = crouch;
+            s.volume = crouch ? s.volume *= 0.6f : _originalVolumes[_sources.IndexOf(s)];
         }
     }
 
