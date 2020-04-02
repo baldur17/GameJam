@@ -41,6 +41,8 @@ namespace Enemy
             _animator.SetBool(IsDead, true);
             // After enemy dies, disable their trail
             trailObject.SetActive(false);
+
+            
         }
 
         public void Move()
