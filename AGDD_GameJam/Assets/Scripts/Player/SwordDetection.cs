@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SwordDetection : MonoBehaviour
 {
 
     public GameObject bloodEffect;
+
+    public float xShake;
+    public float minYShake, maxYShake;
     
     private void OnTriggerExit2D(Collider2D other)
     {
+        
+        
         if (other.CompareTag($"Enemy"))
         {
             IEnemy enemy = other.gameObject.GetComponentInParent<IEnemy>();
@@ -18,6 +24,12 @@ public class SwordDetection : MonoBehaviour
             if (enemy != null)
             {
                 Instantiate(bloodEffect, other.transform.position, Quaternion.identity);
+                GameObject cam = Camera.main.gameObject;
+
+                float x = Random.Range(-xShake, xShake);
+                float y = Random.Range(minYShake, maxYShake);
+                
+                cam.transform.position = cam.transform.position + new Vector3(x, y, 0);
             }
         }
     }
