@@ -19,16 +19,15 @@ public class HideAble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Player entered hideable object");
+        //Set player attribute to not detectable
+        _playerController.isDetectable = false;
+        Debug.Log("PLayer can not be detected");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Player left safety");
+        //Set player attribute to detectable
+        _playerController.isDetectable = true;
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Debug.Log("oncollision");
-    }
+    
 }

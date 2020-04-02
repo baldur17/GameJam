@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
 
     public float holdVerticalTimeUp;
     public float holdVerticalTimeDown;
+
+    [HideInInspector] public bool isDetectable;
     
     #endregion
 
@@ -123,11 +125,17 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        //Ignore the collisions between layer 11 (player) and layer 9 (Enemy)
+        Physics2D.IgnoreLayerCollision(11, 9);
+        
+        //Initialize isDetectable
+        isDetectable = true;
+        
         //_grabTimer control if player can grab, _grabRate is how long until player can try to grab again
         _grabTimer = 0f;
         _grabRate = 0.5f;
         _slideTimer = 0f;
-        //Small cooldown on jump to allow for ledge grab to work properly, not meant as an actual cooldown
+        //Small cooldown on jump to allow for ledge grab to work p roperly, not meant as an actual cooldown
         _jumpRate = 0.5f;
         _jumpTimer = 0f;
         //Small cooldown on attack
@@ -599,7 +607,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            print("else in ledge grab");
             _animator.SetBool(IsGrabbing, false);
             _isLedgeGrabbing = false;
             _rb.gravityScale = _initialGravity;
