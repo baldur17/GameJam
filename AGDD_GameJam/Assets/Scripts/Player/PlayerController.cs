@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
 
         if (_timeSinceDeath >= restartDelay && _isDead)
         {
-            GameManager.instance.RestartLevel();
+            // RestartLevel();
         }
         if (_isDead)
         {
@@ -254,6 +254,11 @@ public class PlayerController : MonoBehaviour
         //         heartbeat.Stop();
         //     }
         // }
+    }
+
+    public void RestartLevel()
+    {
+        GameManager.instance.RestartLevel();
     }
 
     private void VerticalJoystickLedge()
