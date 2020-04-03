@@ -416,6 +416,8 @@ MonoBehaviour:
   holdVerticalTimeUp: 0.2
   holdVerticalTimeDown: 0.2
   isDetectable: 0
+  heartbeat: {fileID: 0}
+  deathSound: {fileID: 0}
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3
@@ -508,8 +510,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01236185f3c34f4da26959fdf0b2b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 0}
   bloodEffect: {fileID: 3927709116832164517, guid: f4a8d8f2a4a0f504bb16df6da5f6cd58,
     type: 3}
+  xShake: 0.1
+  minYShake: 0.1
+  maxYShake: 0.15
 --- !u!1 &7275127145548781001
 GameObject:
   m_ObjectHideFlags: 0

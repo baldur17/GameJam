@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class SwordDetection : MonoBehaviour
 {
-
+    public AudioSource hitSound;
     public GameObject bloodEffect;
 
     public float xShake;
@@ -23,6 +23,7 @@ public class SwordDetection : MonoBehaviour
             enemy?.Hit(1);
             if (enemy != null)
             {
+                if(!hitSound.isPlaying) hitSound.Play();
                 Instantiate(bloodEffect, other.transform.position, Quaternion.identity);
                 GameObject cam = Camera.main.gameObject;
 
