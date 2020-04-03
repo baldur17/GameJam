@@ -24,6 +24,8 @@ namespace Enemy
 
         // Time needed for enemy to fully detect player
         public float detectionTime;
+
+        public LayerMask layerMasks;
         
         #endregion
         
@@ -49,6 +51,8 @@ namespace Enemy
 
             _patrol = gameObject.GetComponentInParent<Patrol>();
             _originalSpeed = _patrol.speed;
+
+            _playerDetected = false;
 
             _playerController = GameManager.instance.player.GetComponent<PlayerController>();
         }
@@ -106,23 +110,30 @@ namespace Enemy
         private void OnTriggerStay2D(Collider2D other)
         {
             // Layermask for every layer except the 9th layer
-            int layerMask = ~(1 << 9);
+            //int layerMask = ~(1 << 9);
             PlayerController player = other.GetComponent<PlayerController>();
+
+            //If player is not able to be detected, return
 
             if (player)
             {
                 // Raycast to the position of player
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Mathf.Infinity, layerMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Mathf.Infinity, layerMasks);
                 
+                //If player is not able to be detected, return
+                if (!player.isDetectable)
+                {
+                    return;
+                }
                 if ( hit )
                 {
                     Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.yellow);
                     // If the raycast collides with player
+                    Debug.Log(hit.collider.name);
                     if (hit.collider.name == "Player")
                     {
                         if (!_playerDetected)
-                        {
-                            
+                        {      
                             //_patrol.speed = 0;
                             _playerDetected = true;
                             _timeSinceDetected = detectionTime;

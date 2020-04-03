@@ -114,6 +114,7 @@
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Heartbeat.cs" t="Include" />
+          <e p="HideAble.cs" t="Include" />
           <e p="MainMenu.cs" t="Include" />
           <e p="Parallex.cs" t="Include" />
           <e p="PhysicsObject.cs" t="Include" />
