@@ -369,7 +369,13 @@ PrefabInstance:
       propertyPath: trailObject
       value: 
       objectReference: {fileID: 2153694460424499694}
-    m_RemovedComponents: []
+    - target: {fileID: 8482543957493001191, guid: c6a3147ea627b2c4ca1ed618641a7907,
+        type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -4475925140897317662, guid: c6a3147ea627b2c4ca1ed618641a7907, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c6a3147ea627b2c4ca1ed618641a7907, type: 3}
 --- !u!4 &7519737567962562125 stripped
 Transform:
