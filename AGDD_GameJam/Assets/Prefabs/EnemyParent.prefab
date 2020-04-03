@@ -214,6 +214,11 @@ PrefabInstance:
       propertyPath: moveSpots.Array.data[1]
       value: 
       objectReference: {fileID: 2153694460167342194}
+    - target: {fileID: 2087697538634286734, guid: c6a3147ea627b2c4ca1ed618641a7907,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4235421748940767743, guid: c6a3147ea627b2c4ca1ed618641a7907,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -268,6 +273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6940569802194795380, guid: c6a3147ea627b2c4ca1ed618641a7907,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568337588733834157, guid: c6a3147ea627b2c4ca1ed618641a7907,
         type: 3}

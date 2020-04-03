@@ -74,10 +74,19 @@ namespace Enemy
         {
             if (_playerDetected)
             {
-                if (_timeSinceDetected <= 0)
+                if (filledExclamation.fillAmount > 0.7)
                 {
                     filledExclamation.color = Color.red;
+                }
+                
+                if (_timeSinceDetected <= 0)
+                {
                     _playerController.Detected();
+                    emptyExclamation.color = Color.black;
+                    //TODO 
+                    //Start coroutine of flashing ! possibly
+                    //Move enemy to players position
+                    _patrol.MoveTowardsPlayer();
                 }
                 else
                 {
@@ -109,8 +118,6 @@ namespace Enemy
         /// <param name="other"></param>
         private void OnTriggerStay2D(Collider2D other)
         {
-            // Layermask for every layer except the 9th layer
-            //int layerMask = ~(1 << 9);
             PlayerController player = other.GetComponent<PlayerController>();
 
             //If player is not able to be detected, return
@@ -129,12 +136,12 @@ namespace Enemy
                 {
                     Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.yellow);
                     // If the raycast collides with player
-                    Debug.Log(hit.collider.name);
                     if (hit.collider.name == "Player")
                     {
                         if (!_playerDetected)
-                        {      
-                            //_patrol.speed = 0;
+                        {
+                            //TODO make detection range larger ? or increase angle
+                            
                             _playerDetected = true;
                             _timeSinceDetected = detectionTime;
                             emptyExclamation.gameObject.SetActive(true);
@@ -152,14 +159,15 @@ namespace Enemy
 
         private void OnTriggerExit2D(Collider2D other)
         {
+
             PlayerController player = other.GetComponent<PlayerController>();
 
             if (!player) return;
             
-            print("PLAYER LEFT TRIGGER");
             _playerDetected = false;
             emptyExclamation.gameObject.SetActive(false);
             filledExclamation.gameObject.SetActive(false);
+            filledExclamation.color = new Color32(192, 192 , 48, 255);
 
             _patrol.speed = _originalSpeed;
         }

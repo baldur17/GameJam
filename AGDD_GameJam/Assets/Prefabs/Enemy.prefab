@@ -77,7 +77,7 @@ MonoBehaviour:
   exclamationGameObject: {fileID: 2936981693463018931}
   emptyExclamation: {fileID: 8865181838163738993}
   filledExclamation: {fileID: 5169860043909030111}
-  detectionTime: 0.4
+  detectionTime: 0.55
   layerMasks:
     serializedVersion: 2
     m_Bits: 3382
@@ -642,8 +642,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d275a911e5fd249b5785bcd129ba2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailObject: {fileID: 0}
   deathSound: {fileID: -4475925140897317662}
+  trailObject: {fileID: 0}
   isDead: 0
 --- !u!95 &8482543957493001184
 Animator:

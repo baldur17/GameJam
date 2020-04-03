@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public float holdVerticalTimeUp;
     public float holdVerticalTimeDown;
 
-    [HideInInspector] public bool isDetectable;
+    [HideInInspector] public bool isDetectable, isDead;
     
     [Header("Audio")] 
     public AudioSource heartbeat;
@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
         
         //Initialize isDetectable
         isDetectable = true;
+        isDead = false;
         
         //_grabTimer control if player can grab, _grabRate is how long until player can try to grab again
         _grabTimer = 0f;
@@ -655,11 +656,8 @@ public class PlayerController : MonoBehaviour
         return _animator.GetBool(IsCrouching);
     }
 
-    //TODO Should we limit player movement during attack animation?  maybe
-    //TODO Should player be able to stop mid slide? nope
-    //TODO Should we increase speed during slide? possibly
-    //TODO Handle case where player slides under something and tries to stand up if map structure allows for that
-    
-    
-    //TODO Player or material must have no friction(or low?) material else he gets stuck
+    public bool GetIsDead()
+    {
+        return _isDead;
+    }
 }

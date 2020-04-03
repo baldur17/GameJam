@@ -9,9 +9,11 @@ public class Patrol : MonoBehaviour
     public float waitTime;
     private float _startWaitTime;
     public Transform[] moveSpots;
-
+    public float speedMultiplier;
+    
     private EnemyController _controller;
-
+    private PlayerController _playerController;
+    
     private int _currentSpot;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class Patrol : MonoBehaviour
         _controller = GetComponent<EnemyController>();
         _currentSpot = 0;
         _startWaitTime = waitTime;
+        _playerController = _playerController = GameManager.instance.player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -26,7 +29,13 @@ public class Patrol : MonoBehaviour
     {
         if (_controller.isDead)
             speed = 0;
-        
+
+        //If player is dead, enemy should no longer follower normal update rules
+        if (_playerController.GetIsDead())
+        {
+            return;
+        }
+
         transform.position = Vector2.MoveTowards(transform.position, moveSpots[_currentSpot].position, speed * Time.deltaTime);
 
         if (!(Vector2.Distance(transform.position, moveSpots[_currentSpot].position) < 0.2f)) return;
@@ -51,4 +60,22 @@ public class Patrol : MonoBehaviour
             waitTime -= Time.deltaTime;
         }
     }
+
+    public void MoveTowardsPlayer()
+    {
+        //TODO out which direction the player is and apply a small buffer so that the enemy does not rush on top of player but rather close to him
+        Vector3 moveTo = _playerController.transform.position;
+        
+        //If enemies x position is smaller than player, then player is to the right
+        //Create new position with by subtracting roughly the width of the enemy from x-axis
+
+        var position = transform.position;
+        moveTo.x = position.x < moveTo.x ? moveTo.x - 2 : moveTo.x + 2;
+        moveTo.y = position.y;
+        
+        
+        position = Vector2.MoveTowards(position, moveTo, speed * speedMultiplier * Time.deltaTime);
+        transform.position = position;
+    }
+    
 }
