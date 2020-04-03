@@ -8,7 +8,6 @@ public class HideAble : MonoBehaviour
     void Start()
     {
         _playerController = GameManager.instance.player.GetComponent<PlayerController>();
-        Debug.Log("hallo");
     }
 
     // Update is called once per frame

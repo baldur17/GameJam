@@ -4,6 +4,7 @@ namespace Enemy
 {
     public class EnemyController : MonoBehaviour, IEnemy
     {
+        public AudioSource deathSound;
         // Animator to set animation variables
         private Animator _animator;
         public GameObject trailObject;
@@ -41,8 +42,8 @@ namespace Enemy
             _animator.SetBool(IsDead, true);
             // After enemy dies, disable their trail
             trailObject.SetActive(false);
-
-            
+                  
+            if(!deathSound.isPlaying) deathSound.Play();
         }
 
         public void Move()
