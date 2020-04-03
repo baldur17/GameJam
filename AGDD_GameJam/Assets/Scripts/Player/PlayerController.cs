@@ -240,20 +240,20 @@ public class PlayerController : MonoBehaviour
             _spawnDust = true;
         }
         
-        if (_animator.GetBool(IsCrouching) && _isGrounded)
-        {
-            if (!heartbeat.isPlaying)
-            {
-                heartbeat.Play();
-            }
-        }
-        else
-        {
-            if (heartbeat.isPlaying)
-            {
-                heartbeat.Stop();
-            }
-        }
+        // if (_animator.GetBool(IsCrouching) && _isGrounded)
+        // {
+        //     if (!heartbeat.isPlaying)
+        //     {
+        //         heartbeat.Play();
+        //     }
+        // }
+        // else
+        // {
+        //     if (heartbeat.isPlaying)
+        //     {
+        //         heartbeat.Stop();
+        //     }
+        // }
     }
 
     private void VerticalJoystickLedge()
@@ -653,6 +653,11 @@ public class PlayerController : MonoBehaviour
     public bool GetCrouch()
     {
         return _animator.GetBool(IsCrouching);
+    }
+
+    public void PlayHeartbeatAudio()
+    {
+        heartbeat.Play();
     }
 
     //TODO Should we limit player movement during attack animation?  maybe
