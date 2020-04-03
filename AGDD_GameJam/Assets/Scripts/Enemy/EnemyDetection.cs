@@ -133,8 +133,8 @@ namespace Enemy
                     if (hit.collider.name == "Player")
                     {
                         if (!_playerDetected)
-                        {
-                            _patrol.speed = 0;
+                        {      
+                            //_patrol.speed = 0;
                             _playerDetected = true;
                             _timeSinceDetected = detectionTime;
                             emptyExclamation.gameObject.SetActive(true);
