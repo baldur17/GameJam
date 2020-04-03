@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 185102942}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: feetPos
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 328358981}
   - component: {fileID: 328358982}
   - component: {fileID: 328358983}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: heartbeat_background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639337154}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LedgeGrabber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 3111426137589557758}
   - component: {fileID: 3111426137589557729}
   - component: {fileID: 1993897216}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -415,6 +415,7 @@ MonoBehaviour:
   ledgeRadius: 0.2
   holdVerticalTimeUp: 0.2
   holdVerticalTimeDown: 0.2
+  isDetectable: 0
 --- !u!95 &3111426137589557729
 Animator:
   serializedVersion: 3
@@ -519,7 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6152805218042925858}
   - component: {fileID: 7400511841626203533}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
