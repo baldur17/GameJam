@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class CameraMovementController : MonoBehaviour
@@ -8,6 +10,7 @@ public class CameraMovementController : MonoBehaviour
     // The object the camera follows
     public GameObject followObject;
     public float followTime;
+    
 
     // Update is called once per frame
     void Update()

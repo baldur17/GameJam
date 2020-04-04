@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     public GameObject dustParticles;
     public GameObject trailEffect;
     public float startTimeBetweenTrail;
+    
 
     //public Animator camAnim;
 
@@ -122,13 +123,28 @@ public class PlayerController : MonoBehaviour
 
     private float _timeSinceLedgeGrab = 0.1f;
     private float _timeSincePause = 0.05f;
+
+    private Vector3 _startPos;
     
     
     #endregion
 
+    private void Awake()
+    {
+        GameManager.instance.player = gameObject;
+
+        if (GameManager.instance.lastCheckpoint == Vector3.zero)
+        {
+            GameManager.instance.lastCheckpoint = _startPos;
+        }
+        _startPos = transform.position;
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
+        
+
         //Ignore the collisions between layer 11 (player) and layer 9 (Enemy)
         Physics2D.IgnoreLayerCollision(11, 9);
         
@@ -165,10 +181,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 
-        
-
-        
-        
         if (Time.timeScale == 1f)
         {
             _timeSincePause += Time.deltaTime;
