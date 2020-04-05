@@ -61,7 +61,17 @@ public class Patrol : MonoBehaviour
             }
             transform.localScale = scale;
             _currentSpot = (_currentSpot + 1) % 2;
-            waitTime = _startWaitTime;
+            
+            
+            //Random 1 out of 4 (subject to change) that waitTime doubles
+            if (Random.Range(1, 5) == 1)
+            {
+                waitTime = _startWaitTime * 2;
+            }
+            else
+            {
+                waitTime = _startWaitTime;
+            }
         }
         else
         {
@@ -72,7 +82,6 @@ public class Patrol : MonoBehaviour
 
     public void MoveTowardsPlayer()
     {
-        //TODO out which direction the player is and apply a small buffer so that the enemy does not rush on top of player but rather close to him
         Vector3 moveTo = _playerController.transform.position;
         //If enemies x position is smaller than player, then player is to the right
         //Create new position with by subtracting roughly the width of the enemy from x-axis
