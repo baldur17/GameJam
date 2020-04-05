@@ -397,7 +397,7 @@ MonoBehaviour:
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 256
-  restartDelay: 2.5
+  restartDelay: 10
   feetPos: {fileID: 185102942}
   checkRadius: 0.3
   whatIsGround:
