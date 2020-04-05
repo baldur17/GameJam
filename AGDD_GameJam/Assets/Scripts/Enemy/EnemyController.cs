@@ -8,6 +8,8 @@ namespace Enemy
         // Animator to set animation variables
         private Animator _animator;
         public GameObject trailObject;
+        private Patrol _patrol;
+        private static readonly int ChaseDead = Animator.StringToHash("ChaseDead");
         
         // Variable to set the death animation
         private static readonly int IsDead = Animator.StringToHash("IsDead");
@@ -22,7 +24,8 @@ namespace Enemy
         {
             isDead = false;
             _animator = gameObject.GetComponent<Animator>();
-            
+            _patrol = gameObject.GetComponentInChildren<Patrol>();
+
             // _slashEffect = GetComponentInChildren<ParticleSystem>();
         }
 
@@ -61,5 +64,12 @@ namespace Enemy
             throw new System.NotImplementedException();
         //     _slashEffect.Play();
         }
+
+        public void SetChaseBoolAnimation(bool input)
+        {
+            _animator.SetBool(ChaseDead, input);
+        }
+        
+
     }
 }

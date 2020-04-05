@@ -77,7 +77,7 @@ MonoBehaviour:
   exclamationGameObject: {fileID: 2936981693463018931}
   emptyExclamation: {fileID: 8865181838163738993}
   filledExclamation: {fileID: 5169860043909030111}
-  detectionTime: 0.4
+  detectionTime: 0.55
   layerMasks:
     serializedVersion: 2
     m_Bits: 3382
