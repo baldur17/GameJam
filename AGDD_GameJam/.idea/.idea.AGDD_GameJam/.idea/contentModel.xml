@@ -106,6 +106,7 @@
         <e p="Scripts" t="Include">
           <e p="BackgroundAudio.cs" t="Include" />
           <e p="CameraMovementController.cs" t="Include" />
+          <e p="Checkpoint.cs" t="Include" />
           <e p="Destroyer.cs" t="Include" />
           <e p="Enemy" t="Include">
             <e p="EnemyController.cs" t="Include" />
@@ -122,6 +123,7 @@
           <e p="PhysicsObject.cs" t="Include" />
           <e p="Player" t="Include">
             <e p="PlayerController.cs" t="Include" />
+            <e p="PlayerPos.cs" t="Include" />
             <e p="SwordDetection.cs" t="Include" />
           </e>
           <e p="playSound.cs" t="Include" />
