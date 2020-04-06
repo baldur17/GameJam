@@ -104,6 +104,7 @@
         <e p="PauseMenu.cs" t="Include" />
         <e p="PlayAudioController.cs" t="Include" />
         <e p="Scripts" t="Include">
+          <e p="AnimRandomClipPlayer.cs" t="Include" />
           <e p="BackgroundAudio.cs" t="Include" />
           <e p="CameraMovementController.cs" t="Include" />
           <e p="Destroyer.cs" t="Include" />
@@ -125,6 +126,7 @@
             <e p="SwordDetection.cs" t="Include" />
           </e>
           <e p="playSound.cs" t="Include" />
+          <e p="RandomClipPlayer.cs" t="Include" />
           <e p="TorchFlicker.cs" t="Include" />
         </e>
         <e p="TrailMaker.cs" t="Include" />

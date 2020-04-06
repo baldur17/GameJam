@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     [Header("Audio")] 
     public AudioSource heartbeat;
     public AudioSource deathSound;
+    public List<AudioSource> steps;
 
     #endregion
 
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
     private float _timeSinceLedgeGrab = 0.1f;
     private float _timeSincePause = 0.05f;
-    
+    private System.Random _rand;
     
     #endregion
 
@@ -158,7 +159,7 @@ public class PlayerController : MonoBehaviour
         // _ledgeColliderPosition = transform.position;
 
         _initialGravity = _rb.gravityScale;
-
+        _rand = new System.Random();
     }
 
     // Update is called once per frame
@@ -653,6 +654,11 @@ public class PlayerController : MonoBehaviour
     public bool GetCrouch()
     {
         return _animator.GetBool(IsCrouching);
+    }
+
+    public void RunSound()
+    {
+        steps[_rand.Next(steps.Count)].Play();
     }
 
     //TODO Should we limit player movement during attack animation?  maybe
