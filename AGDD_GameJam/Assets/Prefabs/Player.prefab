@@ -416,7 +416,7 @@ MonoBehaviour:
   holdVerticalTimeDown: 0.2
   isDetectable: 0
   isDead: 0
-  heartbeat: {fileID: 0}
+  heartbeat: {fileID: 328358983}
   deathSound: {fileID: 0}
 --- !u!95 &3111426137589557729
 Animator:
