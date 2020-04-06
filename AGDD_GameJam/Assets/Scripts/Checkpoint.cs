@@ -9,7 +9,6 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("PLAYER DETECTED");
             GameManager.instance.lastCheckpoint = transform.position;
         }
     }
