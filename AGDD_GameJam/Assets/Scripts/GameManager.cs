@@ -10,12 +10,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     #endregion
 
     public GameObject player;
+    private Transform _start;
+    public Vector3 lastCheckpoint;
 
     public void RestartLevel()
     {

@@ -397,7 +397,7 @@ MonoBehaviour:
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 256
-  restartDelay: 1.23
+  restartDelay: 10
   feetPos: {fileID: 185102942}
   checkRadius: 0.3
   whatIsGround:
@@ -415,7 +415,8 @@ MonoBehaviour:
   holdVerticalTimeUp: 0.2
   holdVerticalTimeDown: 0.2
   isDetectable: 0
-  heartbeat: {fileID: 0}
+  isDead: 0
+  heartbeat: {fileID: 328358983}
   deathSound: {fileID: 0}
 --- !u!95 &3111426137589557729
 Animator:

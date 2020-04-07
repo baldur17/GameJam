@@ -20,7 +20,6 @@ public class HideAble : MonoBehaviour
     {
         //Set player attribute to not detectable
         _playerController.isDetectable = false;
-        Debug.Log("PLayer can not be detected");
     }
 
     private void OnTriggerExit2D(Collider2D other)

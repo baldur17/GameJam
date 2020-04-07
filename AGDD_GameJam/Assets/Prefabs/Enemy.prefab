@@ -77,7 +77,7 @@ MonoBehaviour:
   exclamationGameObject: {fileID: 2936981693463018931}
   emptyExclamation: {fileID: 8865181838163738993}
   filledExclamation: {fileID: 5169860043909030111}
-  detectionTime: 0.4
+  detectionTime: 0.55
   layerMasks:
     serializedVersion: 2
     m_Bits: 3382
@@ -509,7 +509,7 @@ Transform:
   m_GameObject: {fileID: 8482543957069993839}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.021, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75036, y: 0.75036, z: 0.75036}
   m_Children: []
   m_Father: {fileID: 8482543957493001190}
   m_RootOrder: 0
@@ -532,7 +532,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 0395f829380e8254d8956f14a25a44c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -553,7 +553,7 @@ SpriteRenderer:
   m_SortingLayerID: -244426665
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: -411378906735354078, guid: c1f0da80f60e3c14cbe653639eca9004,
+  m_Sprite: {fileID: 2448582194061851316, guid: c085a401bca7dc34e856fa6ac24b6531,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -582,7 +582,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.0625, y: 0.0625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -604,6 +604,7 @@ GameObject:
   - component: {fileID: 8482543957493001184}
   - component: {fileID: 2087697538634286734}
   - component: {fileID: -4475925140897317662}
+  - component: {fileID: 656128468189113398}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -642,8 +643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d275a911e5fd249b5785bcd129ba2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailObject: {fileID: 0}
   deathSound: {fileID: -4475925140897317662}
+  trailObject: {fileID: 0}
   isDead: 0
 --- !u!95 &8482543957493001184
 Animator:
@@ -777,3 +778,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!212 &656128468189113398
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482543957493001189}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

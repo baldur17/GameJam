@@ -897,6 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: b576034f7a824ff428b9517acd6f0284, type: 3}
+  volume: 0.4
 --- !u!1101 &-4577744920253857557
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -2453,6 +2454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: b576034f7a824ff428b9517acd6f0284, type: 3}
+  volume: 0.4
 --- !u!1101 &4637200189877641294
 AnimatorStateTransition:
   m_ObjectHideFlags: 3

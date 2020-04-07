@@ -37,7 +37,6 @@ public class AnimRandomClipPlayer : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("sdjkfhg");
         var index = _rand.Next(clips.Count);
         _source.clip = clips[index];
         _source.volume = volume[index];

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Numerics;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -21,6 +20,8 @@ namespace Enemy
 
         public Image emptyExclamation;
         public Image filledExclamation;
+
+        public Light2D exclamationLight; 
 
         // Time needed for enemy to fully detect player
         public float detectionTime;
@@ -40,12 +41,15 @@ namespace Enemy
         private float _originalSpeed;
 
         private PlayerController _playerController;
+        private EnemyController _controller;
+        private bool _lightCoroutine;
         
         #endregion
         
         // Start is called before the first frame update
         void Start()
         {
+            _lightCoroutine = true;
             _collider = GetComponent<PolygonCollider2D>();
             _collider.points = new Vector2[4];
 
@@ -55,6 +59,7 @@ namespace Enemy
             _playerDetected = false;
 
             _playerController = GameManager.instance.player.GetComponent<PlayerController>();
+            _controller = gameObject.GetComponentInParent<EnemyController>();
         }
 
         // Update is called once per frame
@@ -74,10 +79,25 @@ namespace Enemy
         {
             if (_playerDetected)
             {
-                if (_timeSinceDetected <= 0)
+                if (filledExclamation.fillAmount > 0.7)
                 {
                     filledExclamation.color = Color.red;
+                }
+                
+                if (_timeSinceDetected <= 0)
+                {
                     _playerController.Detected();
+                    emptyExclamation.color = Color.black;
+                    //Start coroutine of flashing ! possibly
+                    if (_lightCoroutine)
+                    {
+                        _controller.SetChaseBoolAnimation(true);
+                        
+                        _lightCoroutine = false;
+                        StartCoroutine(nameof(ExclamationLight));
+                    }
+                    //Move enemy to players position
+                    _patrol.MoveTowardsPlayer();
                 }
                 else
                 {
@@ -109,8 +129,6 @@ namespace Enemy
         /// <param name="other"></param>
         private void OnTriggerStay2D(Collider2D other)
         {
-            // Layermask for every layer except the 9th layer
-            //int layerMask = ~(1 << 9);
             PlayerController player = other.GetComponent<PlayerController>();
 
             //If player is not able to be detected, return
@@ -129,22 +147,18 @@ namespace Enemy
                 {
                     Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.yellow);
                     // If the raycast collides with player
-                    Debug.Log(hit.collider.name);
                     if (hit.collider.name == "Player")
                     {
                         if (!_playerDetected)
-                        {      
-                            //_patrol.speed = 0;
+                        {
+                            //TODO make detection range larger ? or increase angle
+                            
                             _playerDetected = true;
                             _timeSinceDetected = detectionTime;
                             emptyExclamation.gameObject.SetActive(true);
                             filledExclamation.gameObject.SetActive(true);
                             setExclamationPercentage(_timeSinceDetected);
                         }
-                        
-                        // player.Detected();
-                        // exclamationGameObject.GetComponent<SpriteRenderer>().enabled = true;
-
                     }
                 }
             }
@@ -152,16 +166,29 @@ namespace Enemy
 
         private void OnTriggerExit2D(Collider2D other)
         {
+
             PlayerController player = other.GetComponent<PlayerController>();
 
             if (!player) return;
             
-            print("PLAYER LEFT TRIGGER");
             _playerDetected = false;
             emptyExclamation.gameObject.SetActive(false);
             filledExclamation.gameObject.SetActive(false);
+            filledExclamation.color = new Color32(192, 192 , 48, 255);
 
             _patrol.speed = _originalSpeed;
+        }
+        
+        private IEnumerator ExclamationLight()
+        {
+            //Light appears around the exclamation point and gets more intense
+            for (var i = 0; i < 6; i++)
+            {
+                exclamationLight.intensity += 0.5f;
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            //_lightCoroutine = true;
         }
     }
 }

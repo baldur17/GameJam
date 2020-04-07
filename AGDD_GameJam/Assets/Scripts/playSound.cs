@@ -8,13 +8,21 @@ using UnityEngine;
 public class playSound : StateMachineBehaviour
 {
     public AudioClip sound;
+    public float volume;
     private AudioSource _source;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _source = animator.gameObject.AddComponent<AudioSource>();
+        if (animator.gameObject.GetComponent<AudioSource>() == null)
+        {
+            _source = animator.gameObject.AddComponent<AudioSource>();
+        }
+        else
+        {
+            _source = animator.gameObject.GetComponent<AudioSource>();
+        }
         _source.clip = sound;
-        _source.volume = FindObjectOfType<HeartbeatAudioEffect>().EffectOn() ? 0.2f : 1f;
+        _source.volume = FindObjectOfType<HeartbeatAudioEffect>().EffectOn() ? volume * 0.2f : volume;
         _source.Play();
     }
 
