@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Timeline;
-using Debug = UnityEngine.Debug;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -118,9 +112,7 @@ public class PlayerController : MonoBehaviour
     private float _timeBetweenTrail;
 
     private float _timeSinceVerticalUp = 0.0f;
-    private bool _verticalUpActive = false;
     private float _timeSinceVerticalDown = 0.0f;
-    private bool _verticalDownActive = false;
 
     private float _timeSinceLedgeGrab = 0.1f;
     private float _timeSincePause = 0.05f;
